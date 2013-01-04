@@ -1,12 +1,12 @@
 package com.nwice.barapp.model;
 
-import com.nwice.barapp.money.DefaultMoneyObject;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+
+import com.nwice.barapp.money.DefaultMoneyObject;
 
 @Entity
 @Table(name="tbl_start_drawer")
@@ -20,7 +20,7 @@ public class StartDrawerObject extends DefaultMoneyObject {
     public Integer getStartDrawerId() {
         return startDrawerId;
     }
-    private void setStartDrawerId(Integer i) {
+    public void setStartDrawerId(Integer i) {
     	startDrawerId = i;
     }    
 	

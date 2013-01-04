@@ -1,25 +1,22 @@
 package com.nwice.barapp.model;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashSet;
+import java.util.Set;
 
-import com.nwice.barapp.DefaultObject;
-import com.nwice.barapp.money.DefaultFundObject;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Table;
-import javax.persistence.NamedQuery;
 import javax.persistence.NamedQueries;
-
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
+import javax.persistence.Table;
+
+import com.nwice.barapp.DefaultObject;
 
 @Entity
 @Table(name="tbl_cashout")
@@ -54,13 +51,13 @@ public class CashoutObject extends DefaultObject {
 	private DropObject dropObject;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set payouts = Collections.synchronizedSet(new HashSet());
+	private Set<PayoutObject> payouts = Collections.synchronizedSet(new HashSet<PayoutObject>());
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set shortages = Collections.synchronizedSet(new HashSet());
+	private Set<ShortageObject> shortages = Collections.synchronizedSet(new HashSet<ShortageObject>());
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set overrings = Collections.synchronizedSet(new HashSet());
+	private Set<OverringObject> overrings = Collections.synchronizedSet(new HashSet<OverringObject>());
 	
 
 	public Integer getCashoutId() {
@@ -112,7 +109,7 @@ public class CashoutObject extends DefaultObject {
     	dropObject = d;
     }
                     
-    public Set getPayouts() {
+    public Set<PayoutObject> getPayouts() {
         return payouts;
     }
             
@@ -120,11 +117,11 @@ public class CashoutObject extends DefaultObject {
     	getPayouts().add(po);
     }
     
-    public void setPayouts(Set payouts) {
+    public void setPayouts(Set<PayoutObject> payouts) {
         this.payouts = payouts;
     }
     
-    public Set getShortages() {
+    public Set<ShortageObject> getShortages() {
         return shortages;
     }
     
@@ -132,11 +129,11 @@ public class CashoutObject extends DefaultObject {
     	getShortages().add(so);
     }
     
-    public void setShortages(Set shortages) {
+    public void setShortages(Set<ShortageObject> shortages) {
         this.shortages = shortages;
     }
     
-    public Set getOverrings() {
+    public Set<OverringObject> getOverrings() {
         return overrings;
     }
     
@@ -144,7 +141,7 @@ public class CashoutObject extends DefaultObject {
     	getOverrings().add(so);
     }
     
-    public void setOverrings(Set overrings) {
+    public void setOverrings(Set<OverringObject> overrings) {
         this.overrings = overrings;
     }
 	

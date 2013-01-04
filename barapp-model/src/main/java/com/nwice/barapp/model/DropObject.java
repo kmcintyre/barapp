@@ -1,12 +1,12 @@
 package com.nwice.barapp.model;
 
-import com.nwice.barapp.money.ExtendedMoneyObject;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+
+import com.nwice.barapp.money.ExtendedMoneyObject;
 
 @Entity
 @Table(name="tbl_drop")
@@ -20,7 +20,7 @@ public class DropObject extends ExtendedMoneyObject {
     public Integer getDropId() {
         return dropId;
     }
-    private void setDropId(Integer i) {
+    public void setDropId(Integer i) {
     	dropId = i;
     }    
 	

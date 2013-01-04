@@ -1,12 +1,12 @@
 package com.nwice.barapp.model;
 
-import com.nwice.barapp.money.DefaultFundObject;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+
+import com.nwice.barapp.money.DefaultFundObject;
 
 
 @Entity
@@ -21,7 +21,7 @@ public class OverringObject extends DefaultFundObject {
     public Integer getOverringId() {
         return overringId;
     }
-    private void setOverringId(Integer i) {
+    public void setOverringId(Integer i) {
     	overringId = i;
     }
     

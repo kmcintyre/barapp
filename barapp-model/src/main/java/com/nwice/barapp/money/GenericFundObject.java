@@ -1,8 +1,8 @@
 package com.nwice.barapp.money;
 
-import com.nwice.barapp.DefaultObject;
-
 import javax.persistence.Column;
+
+import com.nwice.barapp.DefaultObject;
 
 public class GenericFundObject extends DefaultObject {
 

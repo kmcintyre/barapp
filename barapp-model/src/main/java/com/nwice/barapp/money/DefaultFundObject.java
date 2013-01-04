@@ -1,8 +1,8 @@
 package com.nwice.barapp.money;
 
-import com.nwice.barapp.model.CashoutObject;
-
 import javax.persistence.ManyToOne;
+
+import com.nwice.barapp.model.CashoutObject;
 
 public class DefaultFundObject extends GenericFundObject {
 	

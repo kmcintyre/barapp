@@ -1,12 +1,12 @@
 package com.nwice.barapp.model;
 
-import com.nwice.barapp.money.DefaultFundObject;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+
+import com.nwice.barapp.money.DefaultFundObject;
 
 @Entity
 @Table(name="tbl_payout")
@@ -17,19 +17,16 @@ public class PayoutObject extends DefaultFundObject {
 	@Column(name="payout_id")	
 	private Integer payoutId;
 
+	@Column(name="name")
 	private String name;
 	
     public Integer getPayoutId() {
         return payoutId;
     }
-    private void setPayoutId(Integer i) {
+    public void setPayoutId(Integer i) {
     	payoutId = i;
     }
     
-	/**
-     * @hibernate.property
-     *  column="name"
-     */    		
 	public String getName() {
 		return name;
 	}

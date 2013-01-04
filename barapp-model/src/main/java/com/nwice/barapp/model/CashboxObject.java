@@ -19,8 +19,8 @@ public class CashboxObject extends ExtendedMoneyObject {
 	
     public Integer getCashboxId() {
         return cashboxId;
-    }
-    private void setCashboxId(Integer i) {
+    }    
+	public void setCashboxId(Integer i) {
     	cashboxId = i;
     }    
 	

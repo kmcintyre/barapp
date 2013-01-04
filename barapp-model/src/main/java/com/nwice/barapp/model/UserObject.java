@@ -1,20 +1,19 @@
 package com.nwice.barapp.model;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-import com.nwice.barapp.DefaultObject;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
+import com.nwice.barapp.DefaultObject;
 
 
 @Entity
@@ -41,12 +40,12 @@ public class UserObject extends DefaultObject {
     private Boolean active;
     
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private List shiftWorkers = Collections.synchronizedList(new ArrayList());
+    private List<ShiftWorkerObject> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorkerObject>());
 
     public Integer getUserId() {
         return userId;
     }
-    private void setUserId(Integer i) {
+    public void setUserId(Integer i) {
     	userId = i;
     }    
 
@@ -92,7 +91,7 @@ public class UserObject extends DefaultObject {
 		active = b;
     }
         
-    public List getShiftWorkers() {
+    public List<ShiftWorkerObject> getShiftWorkers() {
         return shiftWorkers;
     }
     
@@ -100,7 +99,7 @@ public class UserObject extends DefaultObject {
     	getShiftWorkers().add(swo);
     }    
     
-    void setShiftWorkers(List shiftWorkers) {
+    void setShiftWorkers(List<ShiftWorkerObject> shiftWorkers) {
         this.shiftWorkers = shiftWorkers;
     }
     
