@@ -6,11 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import com.nwice.barapp.money.ExtendedMoneyObject;
+import com.nwice.barapp.money.ExtendedMoney;
 
 @Entity
 @Table(name="tbl_drop")
-public class DropObject extends ExtendedMoneyObject {
+public class Drop extends ExtendedMoney {
 
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

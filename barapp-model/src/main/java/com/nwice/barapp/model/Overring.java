@@ -6,22 +6,23 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import com.nwice.barapp.money.DefaultFundObject;
+import com.nwice.barapp.fund.DefaultFund;
+
 
 @Entity
-@Table(name="tbl_shortage")
-public class ShortageObject extends DefaultFundObject {
+@Table(name="tbl_overring")
+public class Overring extends DefaultFund {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="shortage_id")
-	private Integer shortageId;	
+	@Column(name="overring_id")	
+	private Integer overringId;	
 	
-    public Integer getShortageId() {
-        return shortageId;
+    public Integer getOverringId() {
+        return overringId;
     }
-    public void setShortageId(Integer i) {
-    	shortageId = i;
+    public void setOverringId(Integer i) {
+    	overringId = i;
     }
     
 }

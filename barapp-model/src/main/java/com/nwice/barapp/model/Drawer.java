@@ -6,12 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import com.nwice.barapp.money.DefaultMoneyObject;
+import com.nwice.barapp.money.DefaultMoney;
 
 
 @Entity
 @Table(name="tbl_drawer")
-public class DrawerObject extends DefaultMoneyObject {
+public class Drawer extends DefaultMoney {
 
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

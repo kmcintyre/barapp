@@ -10,7 +10,7 @@ import com.nwice.barapp.DefaultObject;
 
 @Entity
 @Table(name="tbl_shift_worker")
-public class ShiftWorkerObject extends DefaultObject {
+public class ShiftWorker extends DefaultObject {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

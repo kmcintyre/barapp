@@ -2,7 +2,7 @@ package com.nwice.barapp.money;
 
 import javax.persistence.Column;
 
-public class AllMoneyObject extends ExtendedMoneyObject {
+public class AllMoney extends ExtendedMoney {
 
 	@Column(name="quarter")
     private Integer quarter = new Integer(0);

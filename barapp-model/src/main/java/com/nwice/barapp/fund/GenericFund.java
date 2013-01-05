@@ -1,10 +1,10 @@
-package com.nwice.barapp.money;
+package com.nwice.barapp.fund;
 
 import javax.persistence.Column;
 
 import com.nwice.barapp.DefaultObject;
 
-public class GenericFundObject extends DefaultObject {
+public class GenericFund extends DefaultObject {
 
 	@Column(name="total")
 	private Double total = new Double( Double.parseDouble("0.0") );

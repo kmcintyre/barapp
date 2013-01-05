@@ -2,7 +2,7 @@ package com.nwice.barapp.money;
 
 import javax.persistence.Column;
 
-public class ExtendedMoneyObject extends DefaultMoneyObject {
+public class ExtendedMoney extends DefaultMoney {
 
 	@Column(name="hundred")
 	private Integer hundred = new Integer(0);
@@ -24,7 +24,7 @@ public class ExtendedMoneyObject extends DefaultMoneyObject {
 		this.fifty = fifty;
 	}
 	
-	public void limitedCopy(ExtendedMoneyObject emo) {
+	public void limitedCopy(ExtendedMoney emo) {
 		emo.setHundred(getHundred());
 		emo.setFifty(getFifty());
 	}

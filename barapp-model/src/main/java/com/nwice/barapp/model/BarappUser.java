@@ -17,8 +17,8 @@ import com.nwice.barapp.DefaultObject;
 
 
 @Entity
-@Table(name="tbl_user")
-public class UserObject extends DefaultObject {
+@Table(name="tbl_bar_user")
+public class BarappUser extends DefaultObject {
 
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -40,7 +40,7 @@ public class UserObject extends DefaultObject {
     private Boolean active;
     
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<ShiftWorkerObject> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorkerObject>());
+    private List<ShiftWorker> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorker>());
 
     public Integer getUserId() {
         return userId;
@@ -91,15 +91,15 @@ public class UserObject extends DefaultObject {
 		active = b;
     }
         
-    public List<ShiftWorkerObject> getShiftWorkers() {
+    public List<ShiftWorker> getShiftWorkers() {
         return shiftWorkers;
     }
     
-    public void addShiftWorker(ShiftWorkerObject swo) {
+    public void addShiftWorker(ShiftWorker swo) {
     	getShiftWorkers().add(swo);
     }    
     
-    void setShiftWorkers(List<ShiftWorkerObject> shiftWorkers) {
+    void setShiftWorkers(List<ShiftWorker> shiftWorkers) {
         this.shiftWorkers = shiftWorkers;
     }
     

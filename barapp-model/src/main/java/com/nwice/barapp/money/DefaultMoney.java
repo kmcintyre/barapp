@@ -2,7 +2,9 @@ package com.nwice.barapp.money;
 
 import javax.persistence.Column;
 
-public class DefaultMoneyObject extends DefaultFundObject {
+import com.nwice.barapp.fund.DefaultFund;
+
+public class DefaultMoney extends DefaultFund {
 
 	@Column(name="twenty")
 	private Integer twenty = new Integer(0);
@@ -44,7 +46,7 @@ public class DefaultMoneyObject extends DefaultFundObject {
 		this.twenty = twenty;
 	}    
 	
-	public void limitedCopy(DefaultMoneyObject dmo) {
+	public void limitedCopy(DefaultMoney dmo) {
 		dmo.setTwenty(getTwenty());
 		dmo.setTen(getTen());
 		dmo.setFive(getFive());

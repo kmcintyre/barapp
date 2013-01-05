@@ -17,7 +17,7 @@ import com.nwice.barapp.DefaultObject;
 
 @Entity
 @Table(name="tbl_shift")
-public class ShiftObject extends DefaultObject {
+public class Shift extends DefaultObject {
 
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -31,10 +31,10 @@ public class ShiftObject extends DefaultObject {
 	private String ampm;
 	
 	@ManyToOne
-	private CashoutObject cashoutObject;
+	private Cashout cashout;
 	
 	@OneToMany
-    private List<ShiftWorkerObject> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorkerObject>());	
+    private List<ShiftWorker> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorker>());	
 	
     public Integer getShiftId() {
         return shiftId;
@@ -43,12 +43,12 @@ public class ShiftObject extends DefaultObject {
     	shiftId = i;
     }
     
-    public CashoutObject getCashoutObject() {
-    	return cashoutObject;
+    public Cashout getCashout() {
+    	return cashout;
     }
     
-    public void setCashoutObject(CashoutObject co) {
-    	cashoutObject = co;
+    public void setCashout(Cashout co) {
+    	cashout = co;
     }
     
     public Date getShiftDate() {
@@ -65,15 +65,15 @@ public class ShiftObject extends DefaultObject {
     	ampm = s;
     }
     
-    public List<ShiftWorkerObject> getShiftWorkers() {
+    public List<ShiftWorker> getShiftWorkers() {
         return shiftWorkers;
     }
     
-    public void addShiftWorker(ShiftWorkerObject sw) {
+    public void addShiftWorker(ShiftWorker sw) {
     	getShiftWorkers().add(sw);
     }
     
-    public void setShiftWorkers(List<ShiftWorkerObject> shiftWorkers) {
+    public void setShiftWorkers(List<ShiftWorker> shiftWorkers) {
         this.shiftWorkers = shiftWorkers;
     }
         	
