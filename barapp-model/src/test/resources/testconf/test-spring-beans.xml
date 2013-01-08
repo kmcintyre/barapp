@@ -12,19 +12,20 @@
 			http://www.springframework.org/schema/context
 			http://www.springframework.org/schema/context/spring-context-3.1.xsd
 	   		">
-	
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
-				 p:dataSource-ref="dataSource"
-				 p:configLocation="classpath:/testconf/test-hibernate-context.xml"
-				 p:packagesToScan="com.nwice.barapp"
-				 />
-	
+		
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 				p:driverClassName="org.hsqldb.jdbcDriver"
 				p:url="jdbc:hsqldb:mem:test"
 				p:username="sa"
 				p:password=""
 				/>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+				 p:dataSource-ref="dataSource"
+				 p:configLocation="classpath:/testconf/test-hibernate-context.xml"
+				 p:packagesToScan="com.nwice.barapp"
+				 />
+	
 	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	

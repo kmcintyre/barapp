@@ -2,7 +2,9 @@ package com.nwice.barapp.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,8 +27,8 @@ public class BarappUser extends DefaultObject {
 
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="user_id")
-    private Integer userId;
+	@Column(name="barapp_user_id")
+    private Integer barappUserId;
 
 	@Column(name="username")
     private String username;
@@ -38,15 +43,19 @@ public class BarappUser extends DefaultObject {
     
 	@Column(name="active")
     private Boolean active;
-    
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<ShiftWorker> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorker>());
 
-    public Integer getUserId() {
-        return userId;
+	
+    //@JoinTable(name="tbl_bar_user_shift_worker",
+    //           joinColumns={@JoinColumn(name="barapp_user_id")},
+    //            inverseJoinColumns={@JoinColumn(name="shift_worker_id")})
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "barappUser")
+    private Set<ShiftWorker> shiftWorkers = Collections.synchronizedSet(new HashSet<ShiftWorker>());
+
+    public Integer getBarappUserId() {
+        return barappUserId;
     }
-    public void setUserId(Integer i) {
-    	userId = i;
+    public void setBarappUserId(Integer i) {
+    	barappUserId = i;
     }    
 
     public String getUsername() {
@@ -91,7 +100,7 @@ public class BarappUser extends DefaultObject {
 		active = b;
     }
         
-    public List<ShiftWorker> getShiftWorkers() {
+    public Set<ShiftWorker> getShiftWorkers() {
         return shiftWorkers;
     }
     
@@ -99,7 +108,7 @@ public class BarappUser extends DefaultObject {
     	getShiftWorkers().add(swo);
     }    
     
-    void setShiftWorkers(List<ShiftWorker> shiftWorkers) {
+    void setShiftWorkers(Set<ShiftWorker> shiftWorkers) {
         this.shiftWorkers = shiftWorkers;
     }
     

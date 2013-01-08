@@ -1,7 +1,9 @@
 package com.nwice.barapp.money;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
+@MappedSuperclass
 public class ExtendedMoney extends DefaultMoney {
 
 	@Column(name="hundred")

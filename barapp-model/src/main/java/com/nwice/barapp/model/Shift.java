@@ -5,11 +5,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,11 +31,9 @@ public class Shift extends DefaultObject {
 	
 	@Column(name="ampm", length=2)
 	private String ampm;
-	
-	@ManyToOne
-	private Cashout cashout;
-	
-	@OneToMany
+		
+	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name="shift_id")
     private List<ShiftWorker> shiftWorkers = Collections.synchronizedList(new ArrayList<ShiftWorker>());	
 	
     public Integer getShiftId() {
@@ -41,14 +41,6 @@ public class Shift extends DefaultObject {
     }
     public void setShiftId(Integer i) {
     	shiftId = i;
-    }
-    
-    public Cashout getCashout() {
-    	return cashout;
-    }
-    
-    public void setCashout(Cashout co) {
-    	cashout = co;
     }
     
     public Date getShiftDate() {

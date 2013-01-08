@@ -1,9 +1,11 @@
 package com.nwice.barapp.fund;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 import com.nwice.barapp.DefaultObject;
 
+@MappedSuperclass
 public class GenericFund extends DefaultObject {
 
 	@Column(name="total")

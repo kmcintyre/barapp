@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,31 +33,40 @@ public class Cashout extends DefaultObject {
 	@Column(name="cashout_id")	
 	private Integer cashoutId;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="drawer_id")
 	private Drawer drawer;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="start_drawer_id")
 	private Drawer startDrawer;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="cashbox_id")
 	private Cashbox cashbox;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="start_cashbox_id")
 	private Cashbox startCashbox;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="shift_id")
 	private Shift shift;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name="drop_id")
 	private Drop drop;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="cashout_id")
 	private Set<Payout> payouts = Collections.synchronizedSet(new HashSet<Payout>());
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="cashout_id")
 	private Set<Shortage> shortages = Collections.synchronizedSet(new HashSet<Shortage>());
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="cashout_id")
 	private Set<Overring> overrings = Collections.synchronizedSet(new HashSet<Overring>());
 	
 
