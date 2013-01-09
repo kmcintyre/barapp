@@ -1,0 +1,1 @@
+<% response.sendRedirect(request.getContextPath() + "/secure/index.jsp"); %>
