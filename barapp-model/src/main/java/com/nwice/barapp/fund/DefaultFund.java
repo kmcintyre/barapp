@@ -6,12 +6,12 @@ import javax.persistence.MappedSuperclass;
 import com.nwice.barapp.DefaultObject;
 
 @MappedSuperclass
-public class GenericFund extends DefaultObject {
+public class DefaultFund extends DefaultObject {
 
 	@Column(name="total")
 	private Double total = new Double( Double.parseDouble("0.0") );
 	
-	@Column(name="description")
+	@Column(name="description", length=128)
 	private String description;
 	
 	public Double getTotal() {
@@ -26,6 +26,14 @@ public class GenericFund extends DefaultObject {
 	}
 	public void setDescription(String s) {
 		this.description = s;
+	}
+	
+	public void limitedCopy(DefaultFund dfo) {
+		dfo.setTotal(getTotal());
+		try {
+			dfo.setDescription(getDescription());
+		} catch (Exception e) {}
+		
 	}
 	
 }

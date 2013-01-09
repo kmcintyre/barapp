@@ -6,12 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import com.nwice.barapp.fund.GenericFund;
+import com.nwice.barapp.fund.DefaultFund;
 
 
 @Entity
 @Table(name="tbl_overring")
-public class Overring extends GenericFund {
+public class Overring extends DefaultFund {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

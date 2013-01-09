@@ -3,10 +3,10 @@ package com.nwice.barapp.money;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-import com.nwice.barapp.fund.GenericFund;
+import com.nwice.barapp.fund.DefaultFund;
 
 @MappedSuperclass
-public class DefaultMoney extends GenericFund {
+public class DefaultMoney extends DefaultFund {
 
 	@Column(name="twenty")
 	private Integer twenty = new Integer(0);

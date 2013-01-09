@@ -4,21 +4,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.hibernate.criterion.Restrictions;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-
-import org.testng.annotations.Test;
-
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import com.nwice.barapp.model.BarappUser;
 import com.nwice.barapp.model.Cashbox;
@@ -56,7 +52,7 @@ public class BarappModelTest extends AbstractTransactionalTestNGSpringContextTes
 		
 		try {
 			Connection conn = ds.getConnection();
-			/* HS-SQL specific */
+			/* HS-SQL specific perhaps */
 			ResultSet rs = conn.getMetaData().getTables(null, null, "TBL_%", null);
 			while (rs.next()) {
 				log.info("table:" + rs.getString(3));				

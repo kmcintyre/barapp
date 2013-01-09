@@ -6,11 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import com.nwice.barapp.fund.GenericFund;
+import com.nwice.barapp.fund.DefaultFund;
 
 @Entity
 @Table(name="tbl_shortage")
-public class Shortage extends GenericFund {
+public class Shortage extends DefaultFund {
 	
 	@javax.persistence.Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

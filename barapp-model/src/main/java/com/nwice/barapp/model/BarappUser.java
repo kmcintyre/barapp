@@ -1,20 +1,14 @@
 package com.nwice.barapp.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,24 +24,20 @@ public class BarappUser extends DefaultObject {
 	@Column(name="barapp_user_id")
     private Integer barappUserId;
 
-	@Column(name="username")
+	@Column(name="username", length=16)
     private String username;
-	@Column(name="password")
+	@Column(name="password", length=32)
     private String password;
-	@Column(name="firstname")
+	@Column(name="firstname", length=32)
     private String firstname;
-	@Column(name="lastname")
+	@Column(name="lastname", length=32)
     private String lastname;
-	@Column(name="role")
+	@Column(name="role", length=16)
     private String role;
     
 	@Column(name="active")
     private Boolean active;
 
-	
-    //@JoinTable(name="tbl_bar_user_shift_worker",
-    //           joinColumns={@JoinColumn(name="barapp_user_id")},
-    //            inverseJoinColumns={@JoinColumn(name="shift_worker_id")})
 	@OneToMany(fetch=FetchType.EAGER, mappedBy = "barappUser")
     private Set<ShiftWorker> shiftWorkers = Collections.synchronizedSet(new HashSet<ShiftWorker>());
 
