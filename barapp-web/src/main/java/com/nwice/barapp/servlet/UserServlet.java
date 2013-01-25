@@ -61,7 +61,7 @@ public class UserServlet extends HttpServlet {
 			} else {
 				uo.setActive( new Boolean(false) );
 			}
-			userManager.getSessionFactory().getCurrentSession().saveOrUpdate(uo);
+			userManager.saveOrUpdateUser(uo);
     	} catch (Exception e) {
     		log.error(e);
         }
