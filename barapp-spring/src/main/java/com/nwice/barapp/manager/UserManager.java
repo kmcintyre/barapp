@@ -7,9 +7,13 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nwice.barapp.model.BarappUser;
 
+@Repository
+@Transactional
 public class UserManager  {
 
 	protected static Logger log = Logger.getLogger(UserManager.class);
@@ -17,9 +21,9 @@ public class UserManager  {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
+//	public SessionFactory getSessionFactory() {
+//		return sessionFactory;
+//	}
 	
 	public BarappUser getUserById(Integer userId) throws Exception {		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
@@ -28,7 +32,8 @@ public class UserManager  {
 		return (BarappUser)o;
 	}
 
-	public BarappUser getUserByUsername(String username) throws Exception {		
+	public BarappUser getUserByUsername(String username) throws Exception {	
+		log.info("Called getUserByUsername:" + username);
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
 		crit.add( Restrictions.eq("username",  username) );
 		Object o = crit.uniqueResult();
@@ -55,6 +60,10 @@ public class UserManager  {
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
 		List users = crit.list();
 		return (BarappUser[])users.toArray(new BarappUser[users.size()]);
+	}
+	
+	public void saveOrUpdateUser(BarappUser uo) {
+		sessionFactory.getCurrentSession().saveOrUpdate(uo);
 	}
 	
 	public void createUser(String firstname, String lastname, String username, String password, String role, Boolean active) 
