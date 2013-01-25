@@ -1,31 +1,40 @@
 package com.nwice.barapp.servlet;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.nwice.barapp.manager.UserManager;
-
-/**
- * @web.servlet
- *      name="InitServlet"
- *      load-on-startup="2"
- **/
 
 public class InitServlet extends HttpServlet {
 	
 	protected static Logger log = Logger.getLogger(InitServlet.class);
 	
-	public void init() throws ServletException {
+	@Autowired
+	private UserManager userManager;	
+	
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+	    
+		log.info("init(ServletConfig config)" );
 		
-		try {
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());		
+		
+		try {			
 			
-			UserManager userManager = new UserManager();
-			log.debug("Size: "  + userManager.getAllUsers().length );
-					 
+			log.info("user size: "  + userManager.getAllUsers().length );
+			
 			if ( userManager.getAllUsers() == null || userManager.getAllUsers().length == 0 ) {
-				userManager.createUser("The", "Owner", "the", "owner", "admin", new Boolean("true"));
+				
+				log.info("Creating admin user");
+				
+				userManager.createUser("the", "owner", "the", "owner", "admin", new Boolean("true"));
+				
+				log.info("new user size: "  + userManager.getAllUsers().length );
 			}					
 			
 		} catch (Exception e) {
