@@ -32,7 +32,9 @@ public class InitServlet extends HttpServlet {
 				
 				log.info("Creating admin user");
 				
-				userManager.createUser("the", "owner", "the", "owner", "admin", new Boolean("true"));
+				userManager.createUser("da", "owner", "admin", "pass", "ROLE_ADMIN", new Boolean("true"));
+				userManager.createUser("bar", "tender", "bar", "pass", "ROLE_BARTENDER", new Boolean("true"));
+				userManager.createUser("bar", "back", "barback", "pass", "ROLE_BARBACK", new Boolean("true"));
 				
 				log.info("new user size: "  + userManager.getAllUsers().length );
 			}					
