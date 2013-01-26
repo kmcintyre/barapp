@@ -21,13 +21,13 @@ public class UserManager  {
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-//	public SessionFactory getSessionFactory() {
-//		return sessionFactory;
-//	}
-	
+	public void saveOrUpdateUser(BarappUser uo) {
+		sessionFactory.getCurrentSession().saveOrUpdate(uo);
+	}
+		
 	public BarappUser getUserById(Integer userId) throws Exception {		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
-		crit.add( Restrictions.eq("userId",  userId) );
+		crit.add( Restrictions.eq("barappUserId",  userId) );
 		Object o = crit.uniqueResult();
 		return (BarappUser)o;
 	}
@@ -61,11 +61,7 @@ public class UserManager  {
 		List users = crit.list();
 		return (BarappUser[])users.toArray(new BarappUser[users.size()]);
 	}
-	
-	public void saveOrUpdateUser(BarappUser uo) {
-		sessionFactory.getCurrentSession().saveOrUpdate(uo);
-	}
-	
+		
 	public void createUser(String firstname, String lastname, String username, String password, String role, Boolean active) 
 	throws Exception {
 		BarappUser uo = new BarappUser();
