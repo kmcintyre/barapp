@@ -1,73 +1,56 @@
 package com.nwice.barapp.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nwice.barapp.manager.UserManager;
 import com.nwice.barapp.model.BarappUser;
 
-/**
- * @web.servlet
- *      name="UserServlet"
- * @web.servlet-mapping
- *      url-pattern="/admin/user.do"
- **/
-
-public class UserServlet extends HttpServlet {
+@Controller
+public class UserServlet {
 	
 	protected static Logger log = Logger.getLogger(UserServlet.class);
 
+	@Autowired
 	private UserManager userManager;
-
-	public void init() throws ServletException {
-		
-		try {
-			
-			userManager = new UserManager();
-			
-		} catch (Exception e) {
-			log.error(e);
-		}
-	}
 	
-	public void service(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	@RequestMapping(value="/admin/user_do", method = RequestMethod.POST)	
+	public String userDo(@RequestParam("userId") Integer userId, 
+						@RequestParam("username") String username,
+						@RequestParam("firstname") String firstname,
+						@RequestParam("lastname") String lastname,
+						@RequestParam("password") String password,
+						@RequestParam("role") String role,
+						@RequestParam("active") Boolean active,
+						Model model) {
+		log.info("called userDo");
     	try {
 			BarappUser uo = null;
 
-			if ( request.getParameter("userId") != null ) {
+			if ( userId != null ) {
 				log.debug("Editing User");
-				uo = userManager.getUserById( new Integer(request.getParameter("userId")));
+				uo = userManager.getUserById( userId );
 			} else {
 				log.debug("Adding User");
 				uo = new BarappUser();
 			}
 			
-			uo.setUsername( request.getParameter("username") );
-			uo.setFirstname( request.getParameter("firstname") );
-			uo.setLastname( request.getParameter("lastname") );
-			uo.setPassword( request.getParameter("password") );
-			uo.setRole( request.getParameter("role") );
-			if ( request.getParameter("active") != null ) {
-				uo.setActive( new Boolean(true) );
-			} else {
-				uo.setActive( new Boolean(false) );
-			}
+			uo.setUsername( username );
+			uo.setFirstname( firstname );
+			uo.setLastname( lastname );
+			uo.setPassword( password );
+			uo.setRole( role );
+			uo.setActive( new Boolean(true) );			
 			userManager.saveOrUpdateUser(uo);
     	} catch (Exception e) {
     		log.error(e);
         }
-    	ServletContext sc = getServletContext(); 
-    	RequestDispatcher rd = sc.getRequestDispatcher("/admin/index.jsp");
-    	rd.include(request, response); 
+    	return "index.jsp";
     }
 	
 	

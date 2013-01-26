@@ -122,7 +122,7 @@ public class CashoutServlet extends CashHandlerServlet {
     		
     		request.getSession().removeAttribute("cashout");
     		
-    		cashoutManager.getSessionFactory().getCurrentSession().save(co);
+    		cashoutManager.saveOrUpdateCashout(co);
     		
     		log.info("done calling persist");
     		

@@ -53,7 +53,7 @@ public class CashHandlerServlet extends HttpServlet {
 		CashoutManager cm = new CashoutManager(); 
 		if ( co.getCashoutId() != null ) {
 			Integer i = co.getCashoutId(); 
-			cm.getSessionFactory().getCurrentSession().saveOrUpdate(co);
+			cm.saveOrUpdateCashout(co);
 			Cashout co2 = cm.getCashoutById(i);
 			request.getSession().setAttribute("cashout", co2);
 			log.info("Washed-" + i);
