@@ -15,12 +15,12 @@
 <% logger.debug("cashoutId-" + cashout.getCashoutId()); %>
 
 <%
-Double u = cashout.getDropObject().getTotal();
+Double u = cashout.getDrop().getTotal();
 Double v = new Double(0);
 
 try {
 
-PayoutObject[] pay_outs = (PayoutObject[])cashout.getPayouts().toArray(new PayoutObject[cashout.getPayouts().size()]);
+Payout[] pay_outs = (Payout[])cashout.getPayouts().toArray(new Payout[cashout.getPayouts().size()]);
 for ( int i = 0; i < pay_outs.length; i++ ) {
 	v = new Double(v.doubleValue() + pay_outs[i].getTotal().doubleValue());
 }
@@ -30,7 +30,7 @@ for ( int i = 0; i < pay_outs.length; i++ ) {
 } 
 
 try {
-	ShiftWorkerObject[] wor_kers = (ShiftWorkerObject[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorkerObject[cashout.getShift().getShiftWorkers().size()]);
+	ShiftWorker[] wor_kers = (ShiftWorker[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorker[cashout.getShift().getShiftWorkers().size()]);
 	
 	for ( int i = 0; i < wor_kers.length; i++ ) {
 		v = new Double(v.doubleValue() + wor_kers[i].getPayout().doubleValue());	

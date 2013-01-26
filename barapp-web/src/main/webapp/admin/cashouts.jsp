@@ -1,13 +1,18 @@
 <%@ page import="com.nwice.barapp.model.*" %>
+<%@ page import="com.nwice.barapp.manager.*" %>
 <%@ page import="com.nwice.barapp.servlet.ShiftServlet" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.nwice.barapp.util.*" %>
 <%@ page import="org.apache.log4j.Logger" %>
 
-<%@ include file="calendar.jsp" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 
-<jsp:useBean id="cashoutManager" scope="application" class="com.nwice.barapp.manager.CashoutManager"/>
+<% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
+<% CashoutManager cashoutManager = (CashoutManager)context.getBean("cashoutManager"); %>
+
+<%@ include file="calendar.jsp" %>
 
 	<% Cashout[] cashouts = cashoutManager.getCashoutsByDates(from_date,to_date); %>
 

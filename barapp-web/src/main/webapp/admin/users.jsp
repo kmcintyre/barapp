@@ -1,6 +1,13 @@
 <%@ page import="com.nwice.barapp.model.BarappUser" %>
+<%@ page import="com.nwice.barapp.manager.*" %>
 
-<jsp:useBean id="userManager" scope="application" class="com.nwice.barapp.manager.UserManager"/>
+<%@ page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+
+<% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
+<% UserManager userManager = (UserManager)context.getBean("userManager"); %>
+
+
 
 <% if ( request.getParameter("useraction") == null ) { %>
 
@@ -16,7 +23,7 @@
 		<%= uo.getLastname() %>, <%= uo.getFirstname() %>
 	</td>
 	<td>
-		<a href="<%= request.getContextPath() %>/admin/index.jsp?action=users&useraction=edit_user&userId=<%= uo.getUserId() %>">Edit</a>
+		<a href="<%= request.getContextPath() %>/admin/index.jsp?action=users&useraction=edit_user&userId=<%= uo.getBarappUserId() %>">Edit</a>
 	</td>
 	</tr>	
 	<% } %>
@@ -30,7 +37,7 @@
 	%>
 	Edit User
 	<jsp:include page="_form_/user_form.jsp">
-		<jsp:param name="userId" value="<%= uo.getUserId() %>"/>
+		<jsp:param name="userId" value="<%= uo.getBarappUserId() %>"/>
 		<jsp:param name="firstname" value="<%= uo.getFirstname() %>"/>
 		<jsp:param name="lastname" value="<%= uo.getLastname() %>"/>
 		<jsp:param name="username" value="<%= uo.getUsername() %>"/>

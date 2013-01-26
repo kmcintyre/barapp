@@ -1,6 +1,6 @@
 
 
-		<% ShiftWorkerObject[] workers = (ShiftWorkerObject[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorkerObject[cashout.getShift().getShiftWorkers().size()]); %>
+		<% ShiftWorker[] workers = (ShiftWorker[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorker[cashout.getShift().getShiftWorkers().size()]); %>
 			<% for ( int i = 0; i < workers.length; i++ ) { %>
 				<tr>
 					<td style="padding-left:10px; padding-right:10px"><%= workers[i].getDescription() %></td><td 

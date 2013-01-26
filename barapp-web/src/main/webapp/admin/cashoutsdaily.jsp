@@ -68,15 +68,15 @@
 			<% } %>
 			
 			<%
-			dailydrop = dailydrop + co.getDropObject().getTotal().doubleValue();
+			dailydrop = dailydrop + co.getDrop().getTotal().doubleValue();
 			%>
 			
 			<%
-			PayoutObject[] payouts = (PayoutObject[])co.getPayouts().toArray(new PayoutObject[co.getPayouts().size()]);
+			Payout[] payouts = (Payout[])co.getPayouts().toArray(new Payout[co.getPayouts().size()]);
 			for ( int j = 0; j < payouts.length; j++ ) {
 				dailypayout = dailypayout + payouts[j].getTotal().doubleValue();
 			}
-			ShiftWorkerObject[] workers = (ShiftWorkerObject[])co.getShift().getShiftWorkers().toArray(new ShiftWorkerObject[co.getShift().getShiftWorkers().size()]);
+			ShiftWorker[] workers = (ShiftWorker[])co.getShift().getShiftWorkers().toArray(new ShiftWorker[co.getShift().getShiftWorkers().size()]);
 			for ( int j = 0; j < workers.length; j++ ) {
 				dailypayout = dailypayout + workers[j].getPayout().doubleValue();		
 			} 

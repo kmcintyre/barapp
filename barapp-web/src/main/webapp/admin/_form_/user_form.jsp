@@ -18,7 +18,7 @@ if ( request.getParameter("userId") != null ) {
 } 
 %>
 
-<form action="user.do" method="post">
+<form action="<%= request.getContextPath() %>/admin/user_do" method="post">
 	<input type="hidden" name="action" value="users"/>
 	<% if ( userId.length() > 0 ) { %>
 		<input type="hidden" name="userId" value="<%= userId %>"/>
@@ -30,13 +30,13 @@ if ( request.getParameter("userId") != null ) {
 	Role: 
 		<select name="role">
 		<option
-		<% if ( role.equals("admin") ) { %>selected<% } %>
+		<% if ( role.equals("ROLE_ADMIN") ) { %>selected<% } %>
 		>admin
 		<option
-		<% if ( role.equals("bartender") || role.equals("") ) { %>selected<% } %>
+		<% if ( role.equals("ROLE_BARTENDER") || role.equals("") ) { %>selected<% } %>
 		>bartender
 		<option
-		<% if ( role.equals("barback") ) { %>selected<% } %>
+		<% if ( role.equals("ROLE_BARBACK") ) { %>selected<% } %>
 		>barback		
 		</select>
 	Active: <input type="checkbox" name="active" <% if ( active.equals("true") ) { %>checked<% } %>/><br>

@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/zab.tld" prefix="calendar" %>
+<%@ taglib uri="/WEB-INF/barapp.tld" prefix="calendar" %>
 
 
 <style>
@@ -153,14 +153,16 @@ Tips: <input onClick="document.calform.submit();" type="checkbox" name="tips_par
 </div>
 <table width="100%">
 <tr><td align="center">
-	<calendar:calendar drop="true" 
-	daily="<%= new Boolean(session.getAttribute("daily_param").toString()) %>" 
-	drop="<%= new Boolean(session.getAttribute("drop_param").toString()) %>" 
-	payouts="<%= new Boolean(session.getAttribute("payouts_param").toString()) %>" 	
-	bartenders="<%= new Boolean(session.getAttribute("bartenders_param").toString()) %>" 		
-	tips="<%= new Boolean(session.getAttribute("tips_param").toString()) %>" 		
-	amtotal="<%= new Boolean(session.getAttribute("amtotal_param").toString()) %>" 		
-	pmtotal="<%= new Boolean(session.getAttribute("pmtotal_param").toString()) %>" 		
-	dayHeight="100" dayWidth="150"/>
+	<calendar:calendar  
+	daily='<%= new Boolean(session.getAttribute("daily_param").toString()) %>'    
+	drop='<%= new Boolean(session.getAttribute("drop_param").toString()) %>' 
+	payouts='<%= new Boolean(session.getAttribute("payouts_param").toString()) %>'  
+	bartenders='<%= new Boolean(session.getAttribute("bartenders_param").toString()) %>'   		
+	tips='<%= new Boolean(session.getAttribute("tips_param").toString()) %>' 
+	amtotal='<%= new Boolean(session.getAttribute("amtotal_param").toString()) %>' 
+	pmtotal='<%= new Boolean(session.getAttribute("pmtotal_param").toString()) %>' 	
+	dayHeight='100' 
+	dayWidth='150'
+	/>
 </td></tr>
 </table>

@@ -56,29 +56,29 @@
 				<% } %>
 			</td>
 			<td>
-				$<%= BarappUtil.doubleToString(co.getDropObject().getTotal()) %>
+				$<%= BarappUtil.doubleToString(co.getDrop().getTotal()) %>
 			</td>
 				<%
 				double t = 0.0;
-				dtotal = dtotal + co.getDropObject().getTotal().doubleValue();
-				PayoutObject[] payouts = (PayoutObject[])co.getPayouts().toArray(new PayoutObject[co.getPayouts().size()]);
+				dtotal = dtotal + co.getDrop().getTotal().doubleValue();
+				Payout[] payouts = (Payout[])co.getPayouts().toArray(new Payout[co.getPayouts().size()]);
 				for ( int j = 0; j < payouts.length; j++ ) {
 					t = t + payouts[j].getTotal().doubleValue();
 					ptotal = ptotal + payouts[j].getTotal().doubleValue();
 				}
-				ShiftWorkerObject[] workers = (ShiftWorkerObject[])co.getShift().getShiftWorkers().toArray(new ShiftWorkerObject[co.getShift().getShiftWorkers().size()]);
+				ShiftWorker[] workers = (ShiftWorker[])co.getShift().getShiftWorkers().toArray(new ShiftWorker[co.getShift().getShiftWorkers().size()]);
 				for ( int j = 0; j < workers.length; j++ ) {
 					t = t + workers[j].getPayout().doubleValue();
 					ptotal = ptotal + workers[j].getPayout().doubleValue();				
 				}
-				ttotal = ttotal + t + co.getDropObject().getTotal().doubleValue();
+				ttotal = ttotal + t + co.getDrop().getTotal().doubleValue();
 				%>
 			<td>
 				$<%= BarappUtil.doubleToString( new Double(t) ) %>
 			</td>
 				
 			<td>
-				$<%= BarappUtil.doubleToString( new Double( co.getDropObject().getTotal().doubleValue() + t) ) %>
+				$<%= BarappUtil.doubleToString( new Double( co.getDrop().getTotal().doubleValue() + t) ) %>
 			</td>			
 			</tr>	
 		<% } catch (Exception e) { logger.error(e); %><%= cashoutId %><% } %>

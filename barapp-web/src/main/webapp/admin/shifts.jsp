@@ -1,15 +1,19 @@
-<%@ page import="com.nwice.barapp.model.*" %> 
+<%@ page import="com.nwice.barapp.model.*" %>
+<%@ page import="com.nwice.barapp.manager.*" %> 
 <%@ page import="com.nwice.barapp.servlet.ShiftServlet" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.nwice.barapp.util.*" %>
 <%@ page import="org.apache.log4j.Logger" %>
 
+<%@ page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+
+<% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
+<% CashoutManager cashoutManager = (CashoutManager)context.getBean("cashoutManager"); %>
+
+
 <%@ include file="calendar.jsp" %>
-
-<jsp:useBean id="cashoutManager" scope="application" class="com.nwice.barapp.manager.CashoutManager"/>
-
-<jsp:useBean id="userManager" scope="application" class="com.nwice.barapp.manager.UserManager"/>
 	
 	<% Logger logger = Logger.getLogger("cashouts.jsp"); %>
 	
@@ -28,10 +32,10 @@
 			Cashout co = cashouts[i];
 			Shift so = co.getShift();
 						
-			ShiftWorkerObject[] workers = (ShiftWorkerObject[])so.getShiftWorkers().toArray(new ShiftWorkerObject[so.getShiftWorkers().size()]);
+			ShiftWorker[] workers = (ShiftWorker[])so.getShiftWorkers().toArray(new ShiftWorker[so.getShiftWorkers().size()]);
 			logger.info("workers length:" + workers.length);
 			for ( int j = 0; j < workers.length; j++ ) {
-				String workerName = userManager.getUserById( workers[j].getUser()).getLastname() + ", " + userManager.getUserById( workers[j].getUser()).getFirstname(); 
+				String workerName = workers[j].getBarappUser().getLastname() + ", " + workers[j].getBarappUser().getFirstname(); 
 				logger.info("worker:" + workerName);
 				Double tips = workers[j].getTips();
 				logger.info("tips:" + tips);				

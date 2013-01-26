@@ -4,9 +4,9 @@
 
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
 
-<% PayoutObject[] payouts = (PayoutObject[])cashout.getPayouts().toArray(new PayoutObject[cashout.getPayouts().size()]); %>
+<% Payout[] payouts = (Payout[])cashout.getPayouts().toArray(new Payout[cashout.getPayouts().size()]); %>
 
-<% ShiftWorkerObject[] shiftWorkers = (ShiftWorkerObject[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorkerObject[cashout.getShift().getShiftWorkers().size()]); %>
+<% ShiftWorker[] shiftWorkers = (ShiftWorker[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorker[cashout.getShift().getShiftWorkers().size()]); %>
 
 <table border="0" cellspacing="0">
 	<form name="payout" action="payout.do">

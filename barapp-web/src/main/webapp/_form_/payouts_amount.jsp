@@ -11,9 +11,9 @@
 
 <% Logger logger = Logger.getLogger("payouts_amount.jsp"); %>
 
-<% PayoutObject[] payouts = (PayoutObject[])cashout.getPayouts().toArray(new PayoutObject[cashout.getPayouts().size()]); %>
+<% Payout[] payouts = (Payout[])cashout.getPayouts().toArray(new Payout[cashout.getPayouts().size()]); %>
 
-<% ShiftWorkerObject[] workers = (ShiftWorkerObject[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorkerObject[cashout.getShift().getShiftWorkers().size()]); %>
+<% ShiftWorker[] workers = (ShiftWorker[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorker[cashout.getShift().getShiftWorkers().size()]); %>
 
 <jsp:useBean id="whoami" scope="session" class="com.nwice.barapp.user.JspUserBean"/>
 
@@ -77,12 +77,12 @@ var checkarray = new Array();
 							<% if ( 
 									workers[i].getUser() != null 
 									&& 
-									searchThese[j].getUserId().intValue() == userManager.getUserById( workers[i].getUser() ).getUserId().intValue()
+									searchThese[j].getBarappUserId().intValue() == userManager.getUserById( workers[i].getUser() ).getBarappUserId().intValue()
 								) { 
 									selected = true;
 								}					
 							%>				
-							<option value="<%= searchThese[j].getUserId() %>" <% if ( selected ) { %>selected<% } %>><%= searchThese[j].getLastname() %>,  <%= searchThese[j].getFirstname() %>
+							<option value="<%= searchThese[j].getBarappUserId() %>" <% if ( selected ) { %>selected<% } %>><%= searchThese[j].getLastname() %>,  <%= searchThese[j].getFirstname() %>
 						<% } %>
 					</select>					
 			</td>

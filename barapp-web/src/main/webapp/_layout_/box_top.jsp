@@ -1,19 +1,20 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.nwice.barapp.model.*" %>
-<%@ page import="org.apache.log4j.Logger" %>
-
-<% Logger logger = Logger.getLogger("box_top.jsp"); %>
+<%@ page import="com.nwice.barapp.manager.*" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 
 <jsp:useBean id="whoami" scope="session" class="com.nwice.barapp.user.JspUserBean"/>
-<jsp:useBean id="userManager" scope="application" class="com.nwice.barapp.manager.UserManager"/>
+
+<% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
+<% UserManager userManager = (UserManager)context.getBean("userManager"); %>
 
 <% if ( whoami.getUser() == null ) { %>
 	<%
 	whoami.setSessionId(request.getSession().getId());
 	if ( request.getUserPrincipal() != null ) {  
 		BarappUser uo = userManager.getUserByUsername(request.getUserPrincipal().getName());
-		System.out.println(uo.getLastname());
 		whoami.setUser( uo );
 	}
 	%>

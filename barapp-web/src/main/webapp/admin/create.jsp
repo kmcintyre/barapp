@@ -7,7 +7,7 @@ DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 Date now = Calendar.getInstance().getTime();
 %>
 
-<script src="/zab/script/CalendarPopup.js">
+<script src="<%= request.getContextPath() %>/script/CalendarPopup.js">
 </script>
 <SCRIPT LANGUAGE="JavaScript">
 	var cal = new CalendarPopup();

@@ -1,5 +1,5 @@
 <% try { %>
-			<% PayoutObject[] payouts = (PayoutObject[])cashout.getPayouts().toArray(new PayoutObject[cashout.getPayouts().size()]); %>
+			<% Payout[] payouts = (Payout[])cashout.getPayouts().toArray(new Payout[cashout.getPayouts().size()]); %>
 			<% for ( int i = 0; i < payouts.length; i++ ) { %>
 				<tr>
 					<td style="padding-left:10px; padding-right:10px"><nobr><%= payouts[i].getName() %></nobr></td><td

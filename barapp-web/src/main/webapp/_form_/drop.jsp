@@ -12,7 +12,7 @@
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="hundred"/>
-				<jsp:param name="value" value="<%= cashout.getDropObject().getHundred() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrop().getHundred() %>"/>
 				<jsp:param name="tabIndex" value="1"/>
 			</jsp:include>
 		</td>		
@@ -24,7 +24,7 @@
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="fifty"/>
-				<jsp:param name="value" value="<%= cashout.getDropObject().getFifty() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrop().getFifty() %>"/>
 				<jsp:param name="tabIndex" value="2"/>
 			</jsp:include>
 		</td>		
@@ -36,7 +36,7 @@
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="twenty"/>
-				<jsp:param name="value" value="<%= cashout.getDropObject().getTwenty() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrop().getTwenty() %>"/>
 				<jsp:param name="tabIndex" value="3"/>
 			</jsp:include>
 		</td>		
@@ -48,7 +48,7 @@
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="ten"/>
-				<jsp:param name="value" value="<%= cashout.getDropObject().getTen() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrop().getTen() %>"/>
 				<jsp:param name="tabIndex" value="4"/>
 			</jsp:include>
 		</td>		
@@ -60,7 +60,7 @@
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="five"/>
-				<jsp:param name="value" value="<%= cashout.getDropObject().getFive() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrop().getFive() %>"/>
 				<jsp:param name="tabIndex" value="5"/>
 			</jsp:include>
 		</td>		
@@ -72,7 +72,7 @@
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="single"/>
-				<jsp:param name="value" value="<%= cashout.getDropObject().getSingle() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrop().getSingle() %>"/>
 				<jsp:param name="tabIndex" value="6"/>
 			</jsp:include>
 		</td>		
@@ -84,7 +84,7 @@
 		<td>
 			<span style="color:#5280b1;font-size:11px">&#36;</span><jsp:include page="_static_/autototalform.jsp">
 				<jsp:param name="denom" value="total"/>
-				<jsp:param name="value" value="<%= BarappUtil.doubleToString(cashout.getDropObject().getTotal()) %>"/>
+				<jsp:param name="value" value="<%= BarappUtil.doubleToString(cashout.getDrop().getTotal()) %>"/>
 			</jsp:include>
 		</td>		
 	</tr>

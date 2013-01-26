@@ -57,7 +57,7 @@ Warnings:<br>
 	</div>
 <% } %>
 
-<% if ( BarappUtil.doubleToString( cashout.getDropObject().getTotal() ).equals("0") ) { 
+<% if ( BarappUtil.doubleToString( cashout.getDrop().getTotal() ).equals("0") ) { 
 	warnings = true; %>
 	<div style="margin-left:20px">
 	<font color="red">
