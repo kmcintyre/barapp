@@ -12,9 +12,15 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.nwice.barapp.model.BarappUser;
 import com.nwice.barapp.model.Cashout;
 
+
+@Repository
+@Transactional
 public class CashoutManager {
 
 	protected static Logger log = Logger.getLogger(CashoutManager.class);
@@ -28,9 +34,9 @@ public class CashoutManager {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+
+	public void saveOrUpdateCashout(Cashout co) {
+		sessionFactory.getCurrentSession().saveOrUpdate(co);
 	}
 	
 	public Cashout[] getAllCashouts() throws Exception {		
