@@ -1,13 +1,19 @@
 <%@ page import="com.nwice.barapp.util.BarappUtil" %>
+<%@ page import="com.nwice.barapp.manager.*" %>
 <%@ page import="com.nwice.barapp.model.*" %>
 <%@ page import="com.nwice.barapp.servlet.PayoutServlet" %>
 <%@ page import="com.nwice.barapp.manager.UserManager" %>
 <%@ page import="java.util.*" %>
+
+<%@ page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+
+<% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
+<% UserManager userManager = (UserManager)context.getBean("userManager"); %>
+
 <%@ page import="org.apache.log4j.Logger" %>
 
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
-
-<jsp:useBean id="userManager" scope="application" class="com.nwice.barapp.manager.UserManager"/>
 
 <% Logger logger = Logger.getLogger("payouts_amount.jsp"); %>
 
@@ -30,31 +36,31 @@ var checkarray = new Array();
 </script>
 
 <table border="0" cellspacing="0" cellpadding="4">
-	<form name="payout" action="payout.do">
+	<form name="payout" action="<%= request.getContextPath() %>/secure/payout.do">
 	<input type="hidden" name="amount" value="yes"/>
 	<input type="hidden" name="action"/>
 	
 	<tr>
-		<td class="largeFont"style="padding: 2 15 2 15">
+		<td class="largeFont" style="padding: 2 15 2 15">
 		<b>Pay To</b>
 		</td>
-		<td class="largeFont"style="padding: 2 15 2 15">
+		<td class="largeFont" style="padding: 2 15 2 15">
 		<b>Description</b>
 		</td>
-		<td class="largeFont"style="padding: 2 15 2 15">
+		<td class="largeFont" style="padding: 2 15 2 15">
 		<b>Payout Amt</b>
 		</td>		
-		<td class="largeFont"style="padding: 2 15 2 15">
+		<td class="largeFont" style="padding: 2 15 2 15">
 		<b>Tips</b>
 		</td>
 	</tr>
 
 	<% for ( int i = 0; i < workers.length; i++ ) { %>
 		<tr>
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 				<%= workers[i].getDescription() %>
 			</td>
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 				<% logger.info("Checking Shift-" + workers[i].getDescription()); %>
 				
 					<%
@@ -75,9 +81,9 @@ var checkarray = new Array();
 						<% for ( int j = 0; j < searchThese.length; j++ ) { %>
 							<% boolean selected = false; %>
 							<% if ( 
-									workers[i].getUser() != null 
+									workers[i].getBarappUser() != null 
 									&& 
-									searchThese[j].getBarappUserId().intValue() == userManager.getUserById( workers[i].getUser() ).getBarappUserId().intValue()
+									searchThese[j].getBarappUserId().intValue() == workers[i].getBarappUser().getBarappUserId().intValue()
 								) { 
 									selected = true;
 								}					
@@ -86,16 +92,16 @@ var checkarray = new Array();
 						<% } %>
 					</select>					
 			</td>
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 				<span style="color:#5280b1;font-size:11px">&#36;</span><jsp:include page="_static_/totalform.jsp">
-					<jsp:param name="denom" value="<%= workers[i].getDescription().concat("_payout") %>"/>
-					<jsp:param name="value" value="<%= BarappUtil.doubleToString(workers[i].getPayout()) %>"/>
+					<jsp:param name="denom" value='<%= workers[i].getDescription().concat("_payout") %>'/>
+					<jsp:param name="value" value='<%= BarappUtil.doubleToString(workers[i].getPayout()) %>'/>
 				</jsp:include>			
 			</td>		
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 				<span style="color:#5280b1;font-size:11px">&#36;</span><jsp:include page="_static_/totalform.jsp">
-					<jsp:param name="denom" value="<%= workers[i].getDescription().concat("_tip") %>"/>
-					<jsp:param name="value" value="<%= BarappUtil.doubleToString(workers[i].getTips()) %>"/>
+					<jsp:param name="denom" value='<%= workers[i].getDescription().concat("_tip") %>'/>
+					<jsp:param name="value" value='<%= BarappUtil.doubleToString(workers[i].getTips()) %>'/>
 				</jsp:include>
 			</td>	
 		</tr>	
@@ -108,27 +114,27 @@ var checkarray = new Array();
 		}
 		%>
 		<tr>
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 				<%= payouts[i].getName() %>
 			</td>
-			<td class="largeFont"style="padding: 2 15 2 15">	
+			<td class="largeFont" style="padding: 2 15 2 15">	
 				<jsp:include page="_static_/descriptionform.jsp">
-					<jsp:param name="description_name" value="<%= payouts[i].getName().concat("_description") %>"/>
-					<jsp:param name="description_value" value="<%= description_value %>"/>
+					<jsp:param name="description_name" value='<%= payouts[i].getName().concat("_description") %>'/>
+					<jsp:param name="description_value" value='<%= description_value %>'/>
 				</jsp:include>				
 			</td>
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 				<span style="color:#5280b1;font-size:11px">&#36;</span><jsp:include page="_static_/totalform.jsp">
-					<jsp:param name="denom" value="<%= payouts[i].getName().concat("_total") %>"/>
-					<jsp:param name="value" value="<%= BarappUtil.doubleToString(payouts[i].getTotal()) %>"/>
+					<jsp:param name="denom" value='<%= payouts[i].getName().concat("_total") %>'/>
+					<jsp:param name="value" value='<%= BarappUtil.doubleToString(payouts[i].getTotal()) %>'/>
 				</jsp:include>			
 			</td>		
-			<td class="largeFont"style="padding: 2 15 2 15">
+			<td class="largeFont" style="padding: 2 15 2 15">
 			</td>
 		</tr>	
 	<% } %>
 	<tr>
-		<td class="largeFont"colspan="4" align="center">
+		<td class="largeFont" colspan="4" align="center">
 			<img  
 			src="<%= request.getContextPath() %>/img/spacer.gif" 
 			width="1" height="20"/>
@@ -136,7 +142,7 @@ var checkarray = new Array();
 	</tr>
 				
 	<tr>
-		<td class="largeFont"colspan="4" align="center">
+		<td class="largeFont" colspan="4" align="center">
 			<input type="button" onClick="javascript:submitForm('payouts')" value=" Back " class="largeFont">
 			<input type="button" onClick="javascript:submitForm('shortages')" value=" Next " class="largeFont">
 		</td>

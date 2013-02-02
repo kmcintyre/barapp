@@ -1,49 +1,39 @@
 package com.nwice.barapp.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nwice.barapp.manager.CashoutManager;
 import com.nwice.barapp.model.Cashout;
 
-/**
- * @web.servlet
- *      name="AdminCashoutServlet"
- * @web.servlet-mapping
- *      url-pattern="/admin/admin_cashout.do"
- **/
-
+@Controller
 public class AdminCashoutServlet extends CashHandlerServlet {
 	
 	private static Logger log = Logger.getLogger(AdminCashoutServlet.class);
-    
-	private CashoutManager cashoutManager;
-
-	public void init() throws ServletException {
-		try {
-			cashoutManager = new CashoutManager();
-		} catch (Exception e) {
-			log.error(e);
-		}
-	}
-		
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+	
+    @Autowired
+    public AdminCashoutServlet(CashoutManager cashoutManager) {
+    	log.info("AdminCashoutServlet created");
+    	this.cashoutManager = cashoutManager;
+    }
+	
+	
+	@RequestMapping(value="/admin/admin_cashout.do", method = RequestMethod.GET)
+    public String adminCashoutDo(HttpServletRequest request) {
     	try {    		
     		Integer i = new Integer( request.getParameter("cashoutId") );
     		Cashout co = cashoutManager.getCashoutById(i);
     		request.getSession().setAttribute("cashout", co);
-    		request.getSession().setAttribute("cashoutId", i);
     		log.debug("set Cashout to session");    		
     	} catch (Exception e) {
         	log.error(e);
-        }
-    	response.sendRedirect( request.getContextPath() + "/secure/index.jsp");
+        }    	
+    	return "/secure/index.jsp";
     }
 	
 }

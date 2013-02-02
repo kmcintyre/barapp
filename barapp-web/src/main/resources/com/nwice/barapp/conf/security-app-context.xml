@@ -16,9 +16,11 @@
 	<global-method-security secured-annotations="enabled" />
 	
     <http auto-config="true">
+        <!-- 
+        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        -->
         <intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-        <intercept-url pattern="/secure/**" access="ROLE_ADMIN, ROLE_USER" />
-    	<intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/secure/**" access="ROLE_ADMIN, ROLE_USER" />    	
         <form-login login-page="/login.jsp" default-target-url="/secure/" authentication-failure-url="/login.jsp?error=Check%20username%20%26%20password"/>
         <logout invalidate-session="true" success-handler-ref="logoutSuccessHandler" />
     </http>

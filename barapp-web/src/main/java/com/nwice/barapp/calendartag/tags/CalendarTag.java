@@ -145,9 +145,8 @@ public class CalendarTag implements Tag {
 		if (!"".equals(decorator) && decorator != null) {
 			// see if what the user specified works
 			try {
-				Class decoratorClass = Class.forName(decorator);
-				decoratorObject = (CalendarDecorator) decoratorClass
-						.newInstance();
+				Class<?> decoratorClass = Class.forName(decorator);
+				decoratorObject = (CalendarDecorator) decoratorClass.newInstance();
 			} catch (Exception e) {
 				throw new JspException("Cannot resolve decorator: " + decorator);
 			}
@@ -192,7 +191,7 @@ public class CalendarTag implements Tag {
 			}
 			if (tempDate == null) {
 				try {
-					tempDate = new Date(date);
+					tempDate = DATE_FORMAT.parse(date);
 				} catch (Exception e) {
 					log.debug("date did not parse as string...");
 					tempDate = null;
@@ -217,7 +216,7 @@ public class CalendarTag implements Tag {
 			}
 			if (tempDate == null) {
 				try {
-					tempDate = new Date(startDate);
+					tempDate = DATE_FORMAT.parse(startDate);
 
 				} catch (Exception e) {
 					log.debug("Start date did not parse as string...");
@@ -243,7 +242,7 @@ public class CalendarTag implements Tag {
 			}
 			if (tempDate == null) {
 				try {
-					tempDate = new Date(endDate);
+					tempDate = DATE_FORMAT.parse(endDate);
 				} catch (Exception e) {
 					log.debug("End Date did not parse as string...");
 					tempDate = null;
@@ -505,6 +504,7 @@ public class CalendarTag implements Tag {
 			cashouts = cm.getCashoutsByDates(startCalendar.getTime(),
 					endCalendar.getTime());
 		} catch (Exception e) {
+			log.error("getCashoutsByDates Error:", e);
 		}
 
 		// draw the header stuff

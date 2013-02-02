@@ -18,10 +18,12 @@ if ( request.getParameter("userId") != null ) {
 } 
 %>
 
-<form action="<%= request.getContextPath() %>/admin/user_do" method="post">
+<form action="<%= request.getContextPath() %>/admin/user.do" method="post">
 	<input type="hidden" name="action" value="users"/>
 	<% if ( userId.length() > 0 ) { %>
 		<input type="hidden" name="userId" value="<%= userId %>"/>
+	<% } else { %>
+		<input type="hidden" name="userId" value="0"/>
 	<% } %>
 	Username: <input type="text" name="username" value="<%= username %>"/><br>
 	Firstname: <input type="text" name="firstname" value="<%= firstname %>"/><br>

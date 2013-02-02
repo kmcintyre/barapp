@@ -5,7 +5,7 @@
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
 
 <table border="0" cellpadding="4" cellspacing="0">
-	<form name="shortage" action="shortage.do">
+	<form name="shortage" action="<%= request.getContextPath() %>/secure/shortage.do">
 	<input type="hidden" name="action"/>
 	<tr>
 		<td align="center"  class="largeFont">
@@ -27,7 +27,7 @@
 					<b>Item</b>
 					</td>					
 				<%
-				ShortageObject[] shortages = (ShortageObject[])cashout.getShortages().toArray( new ShortageObject[cashout.getShortages().size()]);
+				Shortage[] shortages = (Shortage[])cashout.getShortages().toArray( new Shortage[cashout.getShortages().size()]);
 				%>
 				<% for ( int i = 0; i < 5; i++ ) { 
 					String denom = "total_shortage_" + i;
@@ -69,7 +69,7 @@
 					Item
 					</td>					
 				<%
-				OverringObject[] overrings = (OverringObject[])cashout.getOverrings().toArray( new OverringObject[cashout.getOverrings().size()]);
+				Overring[] overrings = (Overring[])cashout.getOverrings().toArray( new Overring[cashout.getOverrings().size()]);
 				%>
 				<% for ( int i = 0; i < 5; i++ ) { 
 					String denom = "total_overring_" + i;

@@ -2,8 +2,6 @@ package com.nwice.barapp.servlet;
 
 import java.util.Date;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,20 +13,12 @@ import com.nwice.barapp.model.Cashout;
 import com.nwice.barapp.money.DefaultMoney;
 import com.nwice.barapp.money.ExtendedMoney;
 
-public class CashHandlerServlet extends HttpServlet {
+public class CashHandlerServlet  {
 
 	protected static Logger log = Logger.getLogger(CashHandlerServlet.class);
 	
 	protected CashoutManager cashoutManager;
-	
-	public void init() throws ServletException {
-		try {
-			cashoutManager = new CashoutManager();
-		} catch (Exception e) {
-			log.error(e);
-		}
-	}
-	
+		
 	public Cashout getCashout(HttpSession session) {
 		return (Cashout)session.getAttribute("cashout");
 	}
@@ -49,12 +39,12 @@ public class CashHandlerServlet extends HttpServlet {
 		}
 	}
 	
-	public static void wash(Cashout co, HttpServletRequest request) throws Exception {
-		CashoutManager cm = new CashoutManager(); 
+	public void wash(Cashout co, HttpServletRequest request) {
+ 
 		if ( co.getCashoutId() != null ) {
 			Integer i = co.getCashoutId(); 
-			cm.saveOrUpdateCashout(co);
-			Cashout co2 = cm.getCashoutById(i);
+			cashoutManager.saveOrUpdateCashout(co);
+			Cashout co2 = cashoutManager.getCashoutById(i);
 			request.getSession().setAttribute("cashout", co2);
 			log.info("Washed-" + i);
 		} else {

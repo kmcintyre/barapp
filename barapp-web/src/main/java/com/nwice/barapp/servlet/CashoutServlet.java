@@ -1,17 +1,19 @@
 package com.nwice.barapp.servlet;
 
-import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nwice.barapp.manager.CashoutManager;
 import com.nwice.barapp.model.Cashbox;
@@ -20,27 +22,32 @@ import com.nwice.barapp.model.Drawer;
 import com.nwice.barapp.model.Drop;
 import com.nwice.barapp.model.Shift;
 
-/**
- * @web.servlet
- *      name="CashoutServlet"
- * @web.servlet-mapping
- *      url-pattern="/secure/cashout.do"
- **/
-
+@Controller
 public class CashoutServlet extends CashHandlerServlet {
 	
 	private static Logger log = Logger.getLogger(CashoutServlet.class);
-   	
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-		String action = "";
-		if ( request.getParameter("action") != null ) {
-			action = "&action=" + request.getParameter("action");
-		}    	
-    	try {    		
-    		log.info("Called doGet");    		
-    		if ( request.getParameter("start") != null ) {
-    			log.debug("creating new Cashout");
+	
+    @Autowired
+    public CashoutServlet(CashoutManager cashoutManager) {
+    	log.info("CashoutServlet created");
+    	this.cashoutManager = cashoutManager;
+    }
+
+	
+	@RequestMapping(value="/secure/cashout.do", method = RequestMethod.GET)
+    public String cashoutDo(
+    		@RequestParam("start") String start,
+    		@RequestParam("shiftoveride") Boolean shiftoveride,
+    		@RequestParam("create_date") String create_date,
+    		@RequestParam("ampm") String ampm,
+    		HttpSession session
+    		) {
+    	
+			log.info("Called cashoutDo");    		
+    		
+			if ( start.equals("yes") ) {
+    			
+    			log.info("creating new Cashout");
     			Cashout co = new Cashout();
     			
     			Drawer drawerObject = new Drawer();
@@ -58,59 +65,59 @@ public class CashoutServlet extends CashHandlerServlet {
     			Drop dropObject = new Drop();
     			co.setDrop( dropObject );
 
-    			if ( request.getParameter("shiftoveride") != null && request.isUserInRole("admin") ) {
+    			if ( shiftoveride.booleanValue()) {
+    				
+    					log.info("shift override");
     				
     					DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-    				
-    					String create_date = request.getParameter("create_date");
-    					String ampm = request.getParameter("ampm");
     					if ( ampm.equals("AM") ) {
     						create_date = create_date + " 14:00";
     					} else {
     						create_date = create_date + " 20:00";
     					}
     					
-    					Date cd = dateFormat.parse(create_date);
+    					Date cd = null;
+						try {
+							cd = dateFormat.parse(create_date);
+						} catch (ParseException e1) {
+							log.error("Can't parse", e1);
+						}
     					
-    					CashoutManager cm = new CashoutManager(); 
     					
-    					try {
-    						Cashout exists = cm.getByShiftDate(cd);
-    						response.getWriter().write("This Shift Already Exists");
-    						return;
-    					} catch (Exception e) {
+						if ( cashoutManager.getByShiftDate(cd) == null ) {
+    						
     						Shift so = new Shift();
     						so.setAmpm(ampm);
     						so.setShiftDate( cd );
     	        			co.setShift( so );
-    	        			request.getSession().setAttribute("adminsave", "yes");
+    	        			
+    	        			session.setAttribute("adminsave", "yes");
+    	        			
+    	        			session.setAttribute("cashout", co);
     					}
+    					
     			} else {
-        			Shift shiftObject = ShiftServlet.getNewShift();
-        			co.setShift( shiftObject );
     				
+        			Shift shiftObject = null;
+        			
+					try {
+						
+						shiftObject = ShiftServlet.getNewShift();
+						
+					} catch (Exception e) {
+						
+						log.error("New Shift can't find", e);
+					}
+        			co.setShift( shiftObject );
+        			
+        			session.setAttribute("cashout", co);    				
     			}
-    			log.debug(co.getShift().getShiftDate().toString());
-    			request.getSession().setAttribute("cashout", co);
-    			log.debug("set Cashout to session");
-    		}
-    		/*
-    		else if ( request.getParameter("force") != null ) {
     			
-    			log.info("force RECORD!");
-    			
-    			save(request,response);
     		}
-    		*/
-    	} catch (Exception e) {
-        	log.error(e);
-        }
-    	ServletContext sc = getServletContext(); 
-    	RequestDispatcher rd = sc.getRequestDispatcher("/secure/index.jsp" + action);
-    	rd.include(request, response); 
+			return "/secure/index.jsp";			
     }
 	
-    public void save(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void save(HttpServletRequest request) throws Exception {
 		if ( getCashout(request.getSession()).getCashoutId() == null ) {
 			log.info("adding a RECORD!");
 			
@@ -135,21 +142,16 @@ public class CashoutServlet extends CashHandlerServlet {
 		}
     }
     
-    
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+    @RequestMapping(value="/secure/cashout.do", method = RequestMethod.POST)
+    public String cashoutSave(HttpServletRequest request) {
     	log.info("called doPost-");
+    	
     	try {
-    		save(request,response);
-    		if ( request.getSession().getAttribute("adminsave") != null ) {
-    			request.getSession().removeAttribute("adminsave");
-    		}
-    	} catch (Exception e) {
-    		log.error(e.toString());
-        }
-    	ServletContext sc = getServletContext(); 
-    	RequestDispatcher rd = sc.getRequestDispatcher("/secure/print.jsp");
-    	rd.include(request, response); 
+			save(request);
+		} catch (Exception e) {
+			log.error("Error saving cashout", e);
+		}
+    	return "/secure/print.jsp";
     }
 
 }

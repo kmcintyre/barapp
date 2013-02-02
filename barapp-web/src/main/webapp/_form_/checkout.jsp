@@ -19,7 +19,8 @@ Errors:<br>
 	</font>
 	</div>
 <% } %>
-<% if ( request.isUserInRole("admin") && cashout.getCashoutId() == null && request.getSession().getAttribute("adminsave") == null ) { 
+
+<% if ( request.isUserInRole("ROLE_ADMIN") && cashout.getCashoutId() == null && request.getSession().getAttribute("adminsave") == null ) { 
 	dealbreaker = true;
 	%>
 	<div style="margin-left:20px">
@@ -38,7 +39,7 @@ Errors:<br>
 
 <div text-align="left">
 Warnings:<br>
-<% if ( !BarappUtil.doubleToString( cashout.getDrawerObject().getTotal() ).equals("400") ) { 
+<% if ( !BarappUtil.doubleToString( cashout.getDrawer().getTotal() ).equals("400") ) { 
 	warnings = true;
 	%>
 	<div style="margin-left:20px">
@@ -48,7 +49,7 @@ Warnings:<br>
 	</div>
 <% } %>
 
-<% if ( !BarappUtil.doubleToString( cashout.getCashboxObject().getTotal() ).equals("1000") ) { 
+<% if ( !BarappUtil.doubleToString( cashout.getCashbox().getTotal() ).equals("1000") ) { 
 	warnings = true; %>
 	<div style="margin-left:20px">
 	<font color="red">

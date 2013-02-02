@@ -10,7 +10,6 @@
 <% SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM d"); %>
 
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
-<jsp:useBean id="userManager" scope="application" class="com.nwice.barapp.manager.UserManager"/>
 
 <% logger.debug("cashoutId-" + cashout.getCashoutId()); %>
 
@@ -44,7 +43,8 @@ try {
 <tr id="hideMeOnPrint">
 	<form>
 	<td colspan="2">
-		<input type="button" value="Print" onClick="document.getElementById('hideMeOnPrint').style.display='none';window.print();document.location.href='<%= request.getContextPath() %>/secure/done.jsp'"></td>
+		<input type="button" value="Print" 
+				onClick="document.getElementById('hideMeOnPrint').style.display='none';document.location.href='<%= request.getContextPath() %>/secure/done.jsp'"></td>
 	</td>
 	</form>
 </tr>
@@ -107,8 +107,8 @@ try {
 	</td>
 	<td valign="middle">
 		<% 
-		ShortageObject[] test_shortages = (ShortageObject[])cashout.getShortages().toArray( new ShortageObject[cashout.getShortages().size()]); 
-		OverringObject[] test_overrings = (OverringObject[])cashout.getOverrings().toArray( new OverringObject[cashout.getOverrings().size()]); 
+		Shortage[] test_shortages = (Shortage[])cashout.getShortages().toArray( new Shortage[cashout.getShortages().size()]); 
+		Overring[] test_overrings = (Overring[])cashout.getOverrings().toArray( new Overring[cashout.getOverrings().size()]); 
 		%>
 		<% if ( test_shortages.length > 0 ) { %>
 			<%@ include file="print_shortages.jsp" %>

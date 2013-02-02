@@ -1,34 +1,33 @@
 package com.nwice.barapp.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nwice.barapp.fund.DefaultFund;
+import com.nwice.barapp.manager.CashoutManager;
 import com.nwice.barapp.model.Cashout;
 import com.nwice.barapp.model.Overring;
 import com.nwice.barapp.model.Shortage;
 
-/**
- * @web.servlet
- *      name="ShortageServlet"
- * @web.servlet-mapping
- *      url-pattern="/secure/shortage.do"
- **/
-
+@Controller
 public class ShortageServlet extends CashHandlerServlet {
 	
 	protected static Logger log = Logger.getLogger(ShortageServlet.class);
 
-	public void service(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-    	try {
+    @Autowired
+    public ShortageServlet(CashoutManager cashoutManager) {
+    	log.info("ShortageServlet created");
+    	this.cashoutManager = cashoutManager;
+    }
+	
+	
+	@RequestMapping(value="/secure/shortage.do", method = RequestMethod.GET)
+	public String shortageDo(HttpServletRequest request) {
     		Cashout co = getCashout(request.getSession());
     		co.getShortages().clear();
     		co.getOverrings().clear();
@@ -36,7 +35,7 @@ public class ShortageServlet extends CashHandlerServlet {
     		for ( int i = 0; i < 5; i++ ) {
     			String total_param = "total_shortage_" + i;
     			try {
-    				Double d = new Double(request.getParameter(total_param));
+    				
     				if ( request.getParameter(total_param).length() > 0 ) {
     					Shortage shortage = new Shortage();
     					processDefaultFund( (DefaultFund)shortage, request, "_shortage_" + i );
@@ -50,9 +49,7 @@ public class ShortageServlet extends CashHandlerServlet {
     		} 
     		for ( int i = 0; i < 5; i++ ) {
     			String total_param = "total_overring_" + i;
-    			try {
-    				Double d = new Double(request.getParameter(total_param));
-    				
+    			try {    				
     				if ( request.getParameter(total_param).length() > 0 ) {
     					Overring overring = new Overring();    					
     					processDefaultFund( (DefaultFund)overring, request, "_overring_" + i );
@@ -67,12 +64,7 @@ public class ShortageServlet extends CashHandlerServlet {
     			}
     		}    		
     		wash(co, request);
-    	} catch (Exception e) {
-    		log.error(e);
-        }
-    	ServletContext sc = getServletContext(); 
-    	RequestDispatcher rd = sc.getRequestDispatcher("/secure/index.jsp");
-    	rd.include(request, response); 
+    	return "/secure/index.jsp";
     }	
 		
 	

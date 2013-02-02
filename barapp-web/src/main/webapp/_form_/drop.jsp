@@ -3,7 +3,7 @@
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
 
 <table border="0" cellpadding="4" cellspacing="0">
-	<form name="drop" action="drop.do">
+	<form name="drop" action="<%= request.getContextPath() %>/secure/drop.do">
 	<input type="hidden" name="action"/>
 	<tr>
 		<td class="largeFont">

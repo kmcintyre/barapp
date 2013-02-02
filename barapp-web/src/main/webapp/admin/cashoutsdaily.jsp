@@ -51,7 +51,7 @@
 			cashoutId = co.getCashoutId().intValue();
 			logger.info("Cashout id:" + co.getCashoutId());
 			logger.info("Shift id:" + co.getShift().getShiftId());
-			if ( ! ShiftServlet.displayFormat.format(co.getShift().getShiftDate()).equals( d ) && !d.equals("") ) { %>
+			if ( ! ShiftManager.displayFormat.format(co.getShift().getShiftDate()).equals( d ) && !d.equals("") ) { %>
 				<%= printDay(d, dailydrop, dailypayout, dailypayout + dailydrop) %>
 				<%
 				dtotal = dtotal + dailydrop;
@@ -61,10 +61,10 @@
 				dailypayout = 0.0;
 				dailydrop = 0.0;		
 				dailytotal = 0.0;		
-				d = ShiftServlet.displayFormat.format(co.getShift().getShiftDate());				
+				d = ShiftManager.displayFormat.format(co.getShift().getShiftDate());				
 				%>
 			<% } else if ( d.equals("") ) { %>
-				<% d = ShiftServlet.displayFormat.format(co.getShift().getShiftDate()); %>
+				<% d = ShiftManager.displayFormat.format(co.getShift().getShiftDate()); %>
 			<% } %>
 			
 			<%

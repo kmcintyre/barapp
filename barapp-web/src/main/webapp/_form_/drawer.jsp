@@ -21,7 +21,7 @@ if ( request.getParameter("previous") != null ) {
 %>
 
 <table border="0" cellpadding="4" cellspacing="0">
-	<form name="drawer" action="drawer.do">
+	<form name="drawer" action="<%= request.getContextPath() %>/secure/drawer.do">
 	<input type="hidden" name="action"/>
 	<tr>
 		<td></td>
@@ -39,14 +39,14 @@ if ( request.getParameter("previous") != null ) {
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="twenty_start"/>
-				<jsp:param name="value" value="<%= cashout.getStartDrawerObject().getTwenty() %>"/>
+				<jsp:param name="value" value="<%= cashout.getStartDrawer().getTwenty() %>"/>
 				<jsp:param name="tabIndex" value="1"/>
 			</jsp:include>					
 		</td>
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="twenty"/>
-				<jsp:param name="value" value="<%= cashout.getDrawerObject().getTwenty() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrawer().getTwenty() %>"/>
 				<jsp:param name="tabIndex" value="5"/>
 			</jsp:include>
 		</td>		
@@ -58,14 +58,14 @@ if ( request.getParameter("previous") != null ) {
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="ten_start"/>
-				<jsp:param name="value" value="<%= cashout.getStartDrawerObject().getTen() %>"/>
+				<jsp:param name="value" value="<%= cashout.getStartDrawer().getTen() %>"/>
 				<jsp:param name="tabIndex" value="2"/>				
 			</jsp:include>					
 		</td>
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="ten"/>
-				<jsp:param name="value" value="<%= cashout.getDrawerObject().getTen() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrawer().getTen() %>"/>
 				<jsp:param name="tabIndex" value="6"/>				
 			</jsp:include>
 		</td>		
@@ -77,14 +77,14 @@ if ( request.getParameter("previous") != null ) {
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="five_start"/>
-				<jsp:param name="value" value="<%= cashout.getStartDrawerObject().getFive() %>"/>
+				<jsp:param name="value" value="<%= cashout.getStartDrawer().getFive() %>"/>
 								<jsp:param name="tabIndex" value="3"/>				
 			</jsp:include>					
 		</td>
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="five"/>
-				<jsp:param name="value" value="<%= cashout.getDrawerObject().getFive() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrawer().getFive() %>"/>
 								<jsp:param name="tabIndex" value="7"/>				
 			</jsp:include>
 		</td>		
@@ -96,14 +96,14 @@ if ( request.getParameter("previous") != null ) {
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="single_start"/>
-				<jsp:param name="value" value="<%= cashout.getStartDrawerObject().getSingle() %>"/>
+				<jsp:param name="value" value="<%= cashout.getStartDrawer().getSingle() %>"/>
 								<jsp:param name="tabIndex" value="4"/>				
 			</jsp:include>					
 		</td>
 		<td>
 			<span style="color:#ffffff;font-size:11px">&#36;</span><jsp:include page="_static_/moneyform.jsp">
 				<jsp:param name="denom" value="single"/>
-				<jsp:param name="value" value="<%= cashout.getDrawerObject().getSingle() %>"/>
+				<jsp:param name="value" value="<%= cashout.getDrawer().getSingle() %>"/>
 								<jsp:param name="tabIndex" value="8"/>				
 			</jsp:include>
 		</td>		
@@ -115,13 +115,13 @@ if ( request.getParameter("previous") != null ) {
 		<td>
 			<span style="color:#5280b1;font-size:11px">&#36;</span><jsp:include page="_static_/autototalform.jsp">
 				<jsp:param name="denom" value="total_start"/>
-				<jsp:param name="value" value="<%= BarappUtil.doubleToString(cashout.getStartDrawerObject().getTotal()) %>"/>
+				<jsp:param name="value" value="<%= BarappUtil.doubleToString(cashout.getStartDrawer().getTotal()) %>"/>
 			</jsp:include>					
 		</td>
 		<td>
 			<span style="color:#5280b1;font-size:11px">&#36;</span><jsp:include page="_static_/autototalform.jsp">
 				<jsp:param name="denom" value="total"/>
-				<jsp:param name="value" value="<%= BarappUtil.doubleToString(cashout.getDrawerObject().getTotal()) %>"/>
+				<jsp:param name="value" value="<%= BarappUtil.doubleToString(cashout.getDrawer().getTotal()) %>"/>
 			</jsp:include>
 		</td>		
 	</tr>	

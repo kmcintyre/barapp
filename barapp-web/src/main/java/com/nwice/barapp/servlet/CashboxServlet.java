@@ -1,30 +1,31 @@
 package com.nwice.barapp.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nwice.barapp.fund.DefaultFund;
+import com.nwice.barapp.manager.CashoutManager;
 import com.nwice.barapp.model.Cashbox;
 import com.nwice.barapp.model.Cashout;
 import com.nwice.barapp.money.DefaultMoney;
 import com.nwice.barapp.money.ExtendedMoney;
 
 
-/**
- * @web.servlet
- *      name="CashboxServlet"
- * @web.servlet-mapping
- *      url-pattern="/secure/cashbox.do"
- **/
-
+@Controller
 public class CashboxServlet extends CashHandlerServlet {
+	
+	protected static Logger log = Logger.getLogger(CashboxServlet.class);
+	
+    @Autowired
+    public CashboxServlet(CashoutManager cashoutManager) {
+    	log.info("CashboxServlet created");
+    	this.cashoutManager = cashoutManager;
+    }	
 	
 	public static void importPrevious(Cashout co) throws Exception {
 		Cashout previous = previousCashout(co);
@@ -40,11 +41,9 @@ public class CashboxServlet extends CashHandlerServlet {
 		co.getStartCashbox().setDescription("copied from previous");
 	}
 	
-	protected static Logger log = Logger.getLogger(CashboxServlet.class);
-
-	public void service(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-	   	try {
+	
+	@RequestMapping(value="/secure/cashbox.do", method = RequestMethod.GET)
+	public String service(HttpServletRequest request) {
     		if ( request.getParameter("previous") != null ) {
     			Cashout co =  getCashout(request.getSession());
     			Cashout previous = cashoutManager.getPreviousByDate( co.getShift().getShiftDate() );
@@ -61,12 +60,7 @@ public class CashboxServlet extends CashHandlerServlet {
 	    		co.setStartCashbox( startCashbox );
 	    		wash(co, request);
     		}
-    	} catch (Exception e) {
-    		log.error(e);
-        }
-    	ServletContext sc = getServletContext(); 
-    	RequestDispatcher rd = sc.getRequestDispatcher("/secure/index.jsp");
-    	rd.include(request, response); 
+	   	return "/secure/index.jsp";
     }	
 		
 	

@@ -76,6 +76,7 @@ public class DefaultCalendarDecorator implements CalendarDecorator {
     		
     		double d = 0.0d;
     		if ( am != null ) {
+    			
     			d = d + am.getDrop().getTotal().doubleValue();
     			d = d + getSum( am.getPayouts() ).doubleValue();
     			d = d + getSWSum( am.getShift().getShiftWorkers() ).doubleValue();
@@ -106,12 +107,12 @@ public class DefaultCalendarDecorator implements CalendarDecorator {
 	    	}	    	
 	    	if ( amtotal && am == null) {
 	    		if ( c.getTime().compareTo( Calendar.getInstance().getTime()) < 0 ) {
-	    			amsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/secure/cashout_do?shiftoveride=&start=yes&ampm=AM&create_date=" + cformat.format(c.getTime()) + ">Create AM Shift</a>");
+	    			amsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/secure/cashout.do?shiftoveride=true&start=yes&ampm=AM&create_date=" + cformat.format(c.getTime()) + ">Create AM Shift</a>");
 	    		}
 	        } 
 	    	if ( pmtotal && pm == null) {
 	    		if ( c.getTime().compareTo( Calendar.getInstance().getTime()) < 0 ) {
-	    			pmsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/secure/cashout_do?shiftoveride=&start=yes&ampm=PM&create_date=" + cformat.format(c.getTime()) + ">Create PM Shift</a>");
+	    			pmsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/secure/cashout.do?shiftoveride=true&start=yes&ampm=PM&create_date=" + cformat.format(c.getTime()) + ">Create PM Shift</a>");
 	    		}
 	        }
 	    	
@@ -229,24 +230,24 @@ public class DefaultCalendarDecorator implements CalendarDecorator {
         this.end = end;
     }
     
-    private Double getSWSum(Collection l) {
+    private Double getSWSum(Collection<ShiftWorker> l) {
     	double sum = 0.0d;
-    	Iterator i = l.iterator();
+    	Iterator<ShiftWorker> i = l.iterator();
     	while ( i.hasNext() ) {
     		try {
-    			ShiftWorker dfo = (ShiftWorker)i.next();
+    			ShiftWorker dfo = i.next();
         		sum = sum + dfo.getPayout().doubleValue();
         	} catch (Exception e) {}
         }    	
         return new Double(sum);
     }
     
-    private Double getSum(Collection l) {
+    private Double getSum(Collection<? extends DefaultFund> l) {
     	double sum = 0.0d;
-    	Iterator i = l.iterator();
+    	Iterator<? extends DefaultFund> i = l.iterator();
     	while ( i.hasNext() ) {
     		try {
-    			DefaultFund dfo = (DefaultFund)i.next();
+    			DefaultFund dfo = i.next();
         		sum = sum + dfo.getTotal().doubleValue();
         	} catch (Exception e) {}
         }    	

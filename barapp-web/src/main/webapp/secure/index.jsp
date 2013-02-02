@@ -1,6 +1,14 @@
 <%@ page import="com.nwice.barapp.model.*" %>
+<%@ page import="com.nwice.barapp.manager.*" %>
 <%@ page import="com.nwice.barapp.servlet.*" %>
 <%@ page import="java.util.*" %>
+
+<%@ page import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils"%>
+
+<% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
+<% ShiftManager shiftManager = (ShiftManager)context.getBean("shiftManager"); %>
+
 
 <jsp:include page="/_layout_/header.jsp">
 	<jsp:param name="title" value=" Checkout "/>
@@ -41,9 +49,9 @@ if ( request.getParameter("action") != null ) {
 		link = link.concat("&action=" + request.getParameter("action"));
 	}
 	%>
-	<% if ( request.isUserInRole("bartender") && ShiftServlet.needShift() ) { %>
+	<% if ( request.isUserInRole("bartender") && shiftManager.needShift() ) { %>
 		<a class="largeFont" href="<%= link %>">Start Cashout</a>
-	<% } else if ( request.isUserInRole("admin") ) { %>
+	<% } else if ( request.isUserInRole("ROLE_ADMIN") ) { %>
 
 		<% if ( request.getParameter("create") == null ) { %>
 			<a class="largeFont" href="<%= link %>">Demo Cashout</a>
@@ -52,7 +60,7 @@ if ( request.getParameter("action") != null ) {
 		<% } else { %>
 			<jsp:include page="/admin/create.jsp"/>
 		<% } %>
-	<% } else if ( request.isUserInRole("bartender") && !ShiftServlet.needShift() ) { %>
+	<% } else if ( request.isUserInRole("bartender") && !shiftManager.needShift() ) { %>
 		<span class="largeFont">This shift is done.</span>
 	<% } %>
 <% } %>

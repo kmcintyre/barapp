@@ -48,7 +48,7 @@
 				<% } %>
 			</td>
 			<td>
-				<%= ShiftServlet.displayFormat.format(co.getShift().getShiftDate()) %> 
+				<%= ShiftManager.displayFormat.format(co.getShift().getShiftDate()) %> 
 				<% if ( ShiftServlet.isAmShift( co.getShift() ) ) { %>
 					Day
 				<% } else { %>

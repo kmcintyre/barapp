@@ -16,11 +16,18 @@ public class UserServlet {
 	
 	protected static Logger log = Logger.getLogger(UserServlet.class);
 
-	@Autowired
 	private UserManager userManager;
 	
-	@RequestMapping(value="/admin/user_do", method = RequestMethod.POST)	
-	public String userDo(@RequestParam("userId") Integer userId, 
+    @Autowired
+    public UserServlet(UserManager userManager) {
+    	log.info("UserServlet created");
+    	this.userManager = userManager;
+    }
+	
+    	
+	@RequestMapping(value="/admin/user.do", method = RequestMethod.POST)	
+	public String userDo(
+						@RequestParam("userId") Integer userId, 
 						@RequestParam("username") String username,
 						@RequestParam("firstname") String firstname,
 						@RequestParam("lastname") String lastname,
@@ -32,7 +39,7 @@ public class UserServlet {
     	try {
 			BarappUser uo = null;
 
-			if ( userId != null ) {
+			if ( userId.intValue() > 0 ) {
 				log.debug("Editing User");
 				uo = userManager.getUserById( userId );
 			} else {

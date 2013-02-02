@@ -1,27 +1,23 @@
 package com.nwice.barapp.servlet;
  
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nwice.barapp.manager.CashoutManager;
 import com.nwice.barapp.manager.UserManager;
 import com.nwice.barapp.model.Cashout;
 import com.nwice.barapp.model.Payout;
 import com.nwice.barapp.model.ShiftWorker;
 
-/**
- * @web.servlet
- *      name="PayoutServlet"
- * @web.servlet-mapping
- *      url-pattern="/secure/payout.do"
- **/
-
+@Controller
 public class PayoutServlet extends CashHandlerServlet {
 	
 	protected static Logger log = Logger.getLogger(PayoutServlet.class);
@@ -29,6 +25,16 @@ public class PayoutServlet extends CashHandlerServlet {
 	private static String[] workers = { "Bartender 1", "Bartender 2", "Barback" };
 	
 	private static String[] picks = { "D.J.", "Fruit", "Pipe Dreams", "Beer Gas", "Doorman", "Misc" };
+	
+	private UserManager userManager;
+	
+    @Autowired
+    public PayoutServlet(CashoutManager cashoutManager, UserManager userManager) {
+    	log.info("PayoutServlet created");
+    	this.cashoutManager = cashoutManager;
+    	this.userManager = userManager;
+    }
+	
 	
 	public static String[] getShiftOptions() {
 		return workers;
@@ -88,10 +94,10 @@ public class PayoutServlet extends CashHandlerServlet {
 		}
 	}
 	
-	public void service(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+	@RequestMapping(value="/secure/payout.do", method = RequestMethod.GET)
+	public String payoutDo(HttpServletRequest request) {
 		
-		String redirect = request.getContextPath() + "/secure/index.jsp?action=payouts";
+		String redirect = "/secure/index.jsp?action=payouts";
 		
 		Cashout co = getCashout(request.getSession());
 		
@@ -130,13 +136,8 @@ public class PayoutServlet extends CashHandlerServlet {
 				} catch (NumberFormatException e) {
 					log.debug(e.toString());
 				}
-				try {
-					UserManager um = new UserManager();
-					
-					sw.setBarappUser( um.getUserById(new Integer(usera)));
-				} catch (Exception e) {
-					log.debug(e.toString());
-				} 
+				
+				sw.setBarappUser( userManager.getUserById(new Integer(usera)));
 			}
 			
 			Payout[] payouts = (Payout[])co.getPayouts().toArray(new Payout[co.getPayouts().size()]);
@@ -150,18 +151,15 @@ public class PayoutServlet extends CashHandlerServlet {
 					log.debug(e.toString());
 				}
 			}
-		}
+			}
 		
-		try {		
 			wash(co, request);
-		} catch (Exception e) {
-			log.error(e); 
-		}
 				
 		if ( !request.getParameter("action").equals("next") && !request.getParameter("action").equals("cancel") ) {
-			redirect = request.getContextPath() + "/secure/index.jsp?action=" + request.getParameter("action");
+			redirect = "/secure/index.jsp?action=" + request.getParameter("action");
 		}
-		response.sendRedirect(redirect);
+		
+		return redirect;
 	}
 		
 }
