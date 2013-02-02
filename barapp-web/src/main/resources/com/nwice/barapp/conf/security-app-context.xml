@@ -16,23 +16,23 @@
 	<global-method-security secured-annotations="enabled" />
 	
     <http auto-config="true">
-        <!-- 
-        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        -->
         <intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-        <intercept-url pattern="/secure/**" access="ROLE_ADMIN, ROLE_USER" />    	
+        <intercept-url pattern="/secure/**" access="ROLE_ADMIN, ROLE_BARTENDER" />    	
         <form-login login-page="/login.jsp" default-target-url="/secure/" authentication-failure-url="/login.jsp?error=Check%20username%20%26%20password"/>
-        <logout invalidate-session="true" success-handler-ref="logoutSuccessHandler" />
     </http>
-
-	<beans:bean id="logoutSuccessHandler" class="org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler"/>
-
-    <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="the" password="owner" authorities="ROLE_ADMIN, ROLE_USER" />
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>
     
+	<authentication-manager>
+	   <authentication-provider>
+		<jdbc-user-service data-source-ref="dataSource"
+ 
+		   users-by-username-query="
+		   	  select username, password, active from tbl_bar_user
+		      where username=?" 
+		   authorities-by-username-query="
+		      select username, role from tbl_bar_user  
+		      where username =?" 
+		/>
+	   </authentication-provider>
+	</authentication-manager>    
+        
 </beans:beans>   
