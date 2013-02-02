@@ -8,7 +8,7 @@
 
 <% ShiftWorker[] shiftWorkers = (ShiftWorker[])cashout.getShift().getShiftWorkers().toArray(new ShiftWorker[cashout.getShift().getShiftWorkers().size()]); %>
 
-<table border="0" cellspacing="0">
+<table class="tbl4p">
 	<form name="payout" action="<%= request.getContextPath() %>/secure/payout.do">
 	<input type="hidden" name="action"/>
 	

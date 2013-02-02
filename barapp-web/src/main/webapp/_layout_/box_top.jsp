@@ -10,14 +10,13 @@
 <% WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(application); %>
 <% UserManager userManager = (UserManager)context.getBean("userManager"); %>
 
-<% if ( whoami.getUser() == null ) { %>
-	<%
+<% if ( whoami.getUser() == null ) { 
 	whoami.setSessionId(request.getSession().getId());
-	if ( request.getUserPrincipal() != null ) {  
-		BarappUser uo = userManager.getUserByUsername(request.getUserPrincipal().getName());
+	
+	if ( request.getUserPrincipal() != null ) {
+		BarappUser uo = userManager.getUserByUsername( request.getUserPrincipal().getName() );
 		whoami.setUser( uo );
-	}
-	%>
+	} %>
 <% } %>
 
 <% 
@@ -32,23 +31,18 @@ Date displayDate = Calendar.getInstance().getTime();
 	%>
 <% } %>
 
-<table cellspacing="0" cellpadding="0" border="0" class="headerBarBack fullWidth">
-	<tr>
-		<td align="left"><img  
-			src="<%= request.getContextPath() %>/img/spacer.gif" 
-			width="10" height="25"/></td>
-		<% if ( whoami.getUser() != null ) { %>
-			<td style="padding-top:2px;font-size:70%;color:#ffffff">
-			<nobr>
-				<b>User: <%= whoami.getUser().getUsername() %></b>
-			</nobr>
-			</td>
-		<% } %>
-		<td align="right" width="100%" style="padding-top:2px;font-size:70%;color:#ffffff;padding-right:15px">
-			<b><%= sdf.format(displayDate) %></b>
-		</td>
-	</tr>
-</table><table width="100%" cellpadding="0" cellspacing="0" style="border: 4px solid #5280b1">
+<div class="headerBarBack fullWidth">
+	<% if ( whoami.getUser() != null ) { %>
+	<span class="userStyle">
+		<b>User: <%= whoami.getUser().getUsername() %></b>
+	</span>	
+	<% } %>	
+	
+	<span class="dateStyle">
+		<b><%= sdf.format(displayDate) %></b>
+	</span>
+</div>
+<table width="100%" style="border: 4px solid #5280b1"  cellpadding="0" cellspacing="0">
 	<tr>
 		<td><img  
 			src="<%= request.getContextPath() %>/img/spacer.gif" 

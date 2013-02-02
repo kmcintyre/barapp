@@ -43,7 +43,7 @@
 			<tr>
 			<td>
 				<% if ( request.getSession().getAttribute("daily") == null ) { %>
-					<a href="<%= request.getContextPath() %>/admin/admin_cashout.do?cashoutId=<%= co.getCashoutId() %>">Edit</a> 
+					<a href="<%= request.getContextPath() %>/admin/cashout/edit.do?cashoutId=<%= co.getCashoutId() %>">Edit</a> 
 					<!-- <%= co.getShift().getShiftDate() %> -->
 				<% } %>
 			</td>

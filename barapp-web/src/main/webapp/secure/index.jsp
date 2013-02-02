@@ -44,24 +44,30 @@ if ( request.getParameter("action") != null ) {
 		<jsp:param name="cashout_action" value="<%= action %>"/>
 	</jsp:include>
 <% } else { 
-	String link = request.getContextPath() + "/secure/cashout.do?start=yes";
+	
+	String link = request.getContextPath() + "/secure/cashout/start.do";
+	
 	if ( request.getParameter("action") != null ) {
 		link = link.concat("&action=" + request.getParameter("action"));
 	}
 	%>
-	<% if ( request.isUserInRole("bartender") && shiftManager.needShift() ) { %>
-		<a class="largeFont" href="<%= link %>">Start Cashout</a>
+	<% if ( request.isUserInRole("ROLE_BARTENDER") && shiftManager.needShift() ) { %>
+	
+		<a class="largeFont" href="<%= link %>?start=yes">Start Cashout</a>
+		
 	<% } else if ( request.isUserInRole("ROLE_ADMIN") ) { %>
 
 		<% if ( request.getParameter("create") == null ) { %>
-			<a class="largeFont" href="<%= link %>">Demo Cashout</a>
+			<a class="largeFont" href="<%= request.getContextPath() %>/admin/cashout/demo.do">Demo Cashout</a>
 			<br><br>
-			<a class="largeFont" href="index.jsp?create=yes">Create Cashout</a>
+			<a class="largeFont" href="<%= request.getContextPath() %>/secure/index.jsp?create=yes">Create Cashout</a>
 		<% } else { %>
 			<jsp:include page="/admin/create.jsp"/>
 		<% } %>
-	<% } else if ( request.isUserInRole("bartender") && !shiftManager.needShift() ) { %>
-		<span class="largeFont">This shift is done.</span>
+	<% } else if ( request.isUserInRole("ROLE_BARTENDER") && !shiftManager.needShift() ) { %>
+		
+		<span class="largeFont">This shift is already complete.</span>
+		
 	<% } %>
 <% } %>
 

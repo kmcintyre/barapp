@@ -20,7 +20,7 @@ if ( request.getParameter("previous") != null ) {
 }
 %>
 
-<table border="0" cellpadding="4" cellspacing="0">
+<table class="tbl4p">
 	<form name="cashbox" action="<%= request.getContextPath() %>/secure/cashbox.do">
 	<input type="hidden" name="action"/>
 	<tr>

@@ -39,7 +39,7 @@
 	}
 </script>
 
-<div class="fullWidth"><table cellspacing="0" cellpadding="0" summary="primary navigation">
+<div class="fullWidth"><table cellpadding="0" cellspacing="0">
 	<tr>
 		<% if ( request.getParameter("tab_action").equals("drawer") ) { %>
 			<td class="tabDrawerOn"><a href="javascript:submitForm('drawer')"><img 

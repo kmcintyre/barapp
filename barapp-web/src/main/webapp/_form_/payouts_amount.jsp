@@ -35,7 +35,7 @@
 var checkarray = new Array();
 </script>
 
-<table border="0" cellspacing="0" cellpadding="4">
+<table class="tbl4p">
 	<form name="payout" action="<%= request.getContextPath() %>/secure/payout.do">
 	<input type="hidden" name="amount" value="yes"/>
 	<input type="hidden" name="action"/>
@@ -143,7 +143,7 @@ var checkarray = new Array();
 				
 	<tr>
 		<td class="largeFont" colspan="4" align="center">
-			<input type="button" onClick="javascript:submitForm('payouts')" value=" Back " class="largeFont">
+			<input type="button" onClick="document.location.href='<%= request.getContextPath() %>/secure/index.jsp?action=payouts'" value=" Back " class="largeFont">
 			<input type="button" onClick="javascript:submitForm('shortages')" value=" Next " class="largeFont">
 		</td>
 	</tr>	

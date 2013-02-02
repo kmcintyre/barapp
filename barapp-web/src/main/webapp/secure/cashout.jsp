@@ -23,7 +23,7 @@
 			<% if ( cashout.getCashoutId() == null ) { %>
 				<jsp:include page="/_form_/checkout.jsp"/>			
 			<% } else { %>
-				<a href="<%= request.getContextPath() %>/secure/print.jsp">Print</a>
+				<button onClick="document.location.href = '<%= request.getContextPath() %>/secure/print.jsp'">Re-Print</button>				
 			<% } %>
 		<% } %>
 	

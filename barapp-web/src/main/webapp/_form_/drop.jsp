@@ -2,7 +2,7 @@
 
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
 
-<table border="0" cellpadding="4" cellspacing="0">
+<table class="tbl4p">
 	<form name="drop" action="<%= request.getContextPath() %>/secure/drop.do">
 	<input type="hidden" name="action"/>
 	<tr>

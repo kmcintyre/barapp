@@ -1,4 +1,4 @@
-		<table cellpadding="5" cellspacing="0">
+		<table cellpadding="5">
 			<tr>
 				<td><b>Overrings</b>:</td><td width="100%" align="center">Item</td><td align="center">Price</td>				
 			</tr>

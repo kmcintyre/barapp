@@ -1,4 +1,4 @@
-		<table cellpadding="5" cellspacing="0">			
+		<table cellpadding="5">			
 			<tr>
 				<td colspan="2"><font size="+1"><b>Drop</b>:</font></td>
 			</tr>

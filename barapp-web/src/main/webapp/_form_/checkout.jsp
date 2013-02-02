@@ -3,11 +3,10 @@
 
 <jsp:useBean id="cashout" scope="session" class="com.nwice.barapp.model.Cashout"/>
 
-
 <% boolean warnings = false; %>
 <% boolean dealbreaker = false; %>
 
-<table width="250" cellpadding="0" cellspacing="0">
+<table width="250">
 <tr><td class="largeFont">
 Errors:<br>
 <% if ( cashout.getShift().getShiftWorkers().size() == 0 ) { 
@@ -76,7 +75,7 @@ Warnings:<br>
 </table>
 <br>
 <% if ( !dealbreaker ) { %>
-	<form action="cashout.do" method="post">
-		<input type="submit" class="largeFont" value="Done">
+	<form action="<%= request.getContextPath() %>/secure/cashout/save.do" method="post">
+		<input type="submit" class="largeFont" value=" Save & Print ">
 	</form>
 <% } %>

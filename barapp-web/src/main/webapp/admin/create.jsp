@@ -14,7 +14,7 @@ Date now = Calendar.getInstance().getTime();
 </SCRIPT>
 
 <table border="0" cellpadding="2" cellspacintg="0">
-<form name="dateSelect" action="<%= request.getContextPath() %>/secure/cashout.do">
+<form name="dateSelect" action="<%= request.getContextPath() %>/admin/cashout/start.do">
 <input type="hidden" name="shiftoveride" value="true">
 <input type="hidden" name="start" value="yes">
 <tr><td>

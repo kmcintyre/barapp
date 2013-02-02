@@ -39,7 +39,7 @@ try {
 } 	
 %>
 
-<table cellpadding="5" cellspacing="0">
+<table cellpadding="5">
 <tr id="hideMeOnPrint">
 	<form>
 	<td colspan="2">
@@ -77,7 +77,7 @@ try {
 </tr>
 <tr>
 	<td colspan="2" align="center">
-		<table cellpadding="5" cellspacing="0">
+		<table cellpadding="5">
 			<tr>
 				<td width="215"></td><td width="200"></td><td  width="100" align="center">Payout</td><td  width="100" align="center">Tips</td>				
 			</tr>	

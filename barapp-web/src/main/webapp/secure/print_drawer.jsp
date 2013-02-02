@@ -1,4 +1,4 @@
-		<table cellpadding="5" cellspacing="0">
+		<table cellpadding="5">
 			<tr>
 				<td width="100%"><font size="+1"><b>Drawer</b>:</font></td><td align="center">Start</td><td align="center">End</td>
 			</tr>

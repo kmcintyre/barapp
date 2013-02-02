@@ -12,7 +12,8 @@
 
 <jsp:include page="/_layout_/box_top.jsp"/>
 
-	<table cellspacing="0" cellpadding="0" width="248px" bgColor="#f2f2e1" border="0" class="loginBox">
+
+	<table class="loginTable">
 
 	<tbody>
 		<tr align="middle">
