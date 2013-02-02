@@ -25,7 +25,7 @@ public class UserManager  {
 		sessionFactory.getCurrentSession().saveOrUpdate(uo);
 	}
 		
-	public BarappUser getUserById(Integer userId) throws Exception {		
+	public BarappUser getUserById(Integer userId) {		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
 		crit.add( Restrictions.eq("barappUserId",  userId) );
 		Object o = crit.uniqueResult();
@@ -42,7 +42,8 @@ public class UserManager  {
 	
 	public BarappUser[] getActiveBartenders() throws Exception {		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
-		crit.add( Restrictions.eq("role", "bartender") );
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		crit.add( Restrictions.eq("role", "ROLE_BARTENDER") );
 		crit.add( Restrictions.eq("active", new Boolean(true) ));
 		List users = crit.list();
 		return (BarappUser[])users.toArray(new BarappUser[users.size()]);
@@ -50,7 +51,8 @@ public class UserManager  {
 
 	public BarappUser[] getActiveBarbacks() throws Exception {		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
-		crit.add( Restrictions.eq("role", "barback") );
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		crit.add( Restrictions.eq("role", "ROLE_BARBACK") );
 		crit.add( Restrictions.eq("active", new Boolean(true) ));
 		List users = crit.list();
 		return (BarappUser[])users.toArray(new BarappUser[users.size()]);
@@ -58,6 +60,7 @@ public class UserManager  {
 	
 	public BarappUser[] getAllUsers() throws Exception {		
 		Criteria crit = sessionFactory.getCurrentSession().createCriteria(BarappUser.class);
+		crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List users = crit.list();
 		return (BarappUser[])users.toArray(new BarappUser[users.size()]);
 	}
