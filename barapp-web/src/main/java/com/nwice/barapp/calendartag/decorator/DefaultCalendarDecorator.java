@@ -107,12 +107,12 @@ public class DefaultCalendarDecorator implements CalendarDecorator {
 	    	}	    	
 	    	if ( amtotal && am == null) {
 	    		if ( c.getTime().compareTo( Calendar.getInstance().getTime()) < 0 ) {
-	    			amsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/secure/cashout.do?shiftoveride=true&start=yes&ampm=AM&create_date=" + cformat.format(c.getTime()) + ">Create AM Shift</a>");
+	    			amsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/admin/cashout/start.do?shiftoveride=true&start=yes&ampm=AM&create_date=" + cformat.format(c.getTime()) + ">Create AM Shift</a>");
 	    		}
 	        } 
 	    	if ( pmtotal && pm == null) {
 	    		if ( c.getTime().compareTo( Calendar.getInstance().getTime()) < 0 ) {
-	    			pmsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/secure/cashout.do?shiftoveride=true&start=yes&ampm=PM&create_date=" + cformat.format(c.getTime()) + ">Create PM Shift</a>");
+	    			pmsb.append("<a href=" + this.pageContext.getServletContext().getContextPath() + "/admin/cashout/start.do?shiftoveride=true&start=yes&ampm=PM&create_date=" + cformat.format(c.getTime()) + ">Create PM Shift</a>");
 	    		}
 	        }
 	    	
