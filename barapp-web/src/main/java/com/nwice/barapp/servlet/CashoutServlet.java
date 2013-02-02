@@ -1,7 +1,6 @@
 package com.nwice.barapp.servlet;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nwice.barapp.manager.CashoutManager;
+
 import com.nwice.barapp.model.Cashbox;
 import com.nwice.barapp.model.Cashout;
 import com.nwice.barapp.model.Drawer;
@@ -33,9 +33,79 @@ public class CashoutServlet extends CashHandlerServlet {
     	this.cashoutManager = cashoutManager;
     }
 
+    public Cashout createCashout() {
+		Cashout co = new Cashout();
+		
+		Drawer drawerObject = new Drawer();
+		co.setDrawer( drawerObject );
+		
+		Drawer startDrawer = new Drawer();
+		co.setStartDrawer( startDrawer );    			
+
+		Cashbox cashboxObject = new Cashbox();
+		co.setCashbox( cashboxObject );
+		
+		Cashbox startCashbox = new Cashbox();
+		co.setStartCashbox( startCashbox );
+
+		Drop dropObject = new Drop();
+		co.setDrop( dropObject );
+		
+		return co;
+    }
+    
 	
-	@RequestMapping(value="/secure/cashout.do", method = RequestMethod.GET)
-    public String cashoutDo(
+	@RequestMapping(value="/admin/cashout/demo.do", method = RequestMethod.GET)
+    public String cashoutDo(HttpSession session) {
+			Cashout co = createCashout();
+			
+			try {
+				co.setShift( ShiftServlet.getNewShift() );
+				
+				session.setAttribute("cashout", co);
+				
+			} catch (Exception e) {
+				log.error("Couldn't create new shift");
+			}			
+			return "/secure/index.jsp";
+	}
+
+	@RequestMapping(value="/admin/cashout/edit.do", method = RequestMethod.GET)
+    public String adminCashoutDo(HttpServletRequest request) {
+    	try {    		
+    		Integer i = new Integer( request.getParameter("cashoutId") );
+    		Cashout co = cashoutManager.getCashoutById(i);
+    		request.getSession().setAttribute("cashout", co);
+    		log.debug("set Cashout to session");    		
+    	} catch (Exception e) {
+        	log.error(e);
+        }    	
+    	return "/secure/index.jsp";
+    }	
+	
+	@RequestMapping(value="/secure/cashout/start.do", method = RequestMethod.GET)
+    public String cashoutStart(
+    		@RequestParam("start") String start,
+    		HttpSession session
+    		) {
+			if ( start.equals("yes") ) {
+				
+				Cashout co = createCashout();
+				
+				try {
+					co.setShift( ShiftServlet.getNewShift() );
+					
+				} catch (Exception e) {
+					log.error("Couldn't create new shift");
+				}
+				
+				session.setAttribute("cashout", co);
+			}
+			return "/secure/index.jsp";
+	}
+    
+	@RequestMapping(value="/admin/cashout/start.do", method = RequestMethod.GET)
+    public String adminCashoutStart(
     		@RequestParam("start") String start,
     		@RequestParam("shiftoveride") Boolean shiftoveride,
     		@RequestParam("create_date") String create_date,
@@ -43,32 +113,17 @@ public class CashoutServlet extends CashHandlerServlet {
     		HttpSession session
     		) {
     	
-			log.info("Called cashoutDo");    		
-    		
-			if ( start.equals("yes") ) {
-    			
-    			log.info("creating new Cashout");
-    			Cashout co = new Cashout();
-    			
-    			Drawer drawerObject = new Drawer();
-    			co.setDrawer( drawerObject );
-    			
-    			Drawer startDrawer = new Drawer();
-    			co.setStartDrawer( startDrawer );    			
-
-    			Cashbox cashboxObject = new Cashbox();
-    			co.setCashbox( cashboxObject );
-    			
-    			Cashbox startCashbox = new Cashbox();
-    			co.setStartCashbox( startCashbox );
-
-    			Drop dropObject = new Drop();
-    			co.setDrop( dropObject );
-
-    			if ( shiftoveride.booleanValue()) {
-    				
-    					log.info("shift override");
-    				
+			log.info("Called adminCashoutStart");
+			
+			try {
+				
+				if ( start.equals("yes") ) {
+					log.info("creating new Cashout");
+					Cashout co = createCashout();
+					if ( shiftoveride.booleanValue()) {
+						
+						log.info("shift override");
+						
     					DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     					if ( ampm.equals("AM") ) {
     						create_date = create_date + " 14:00";
@@ -76,13 +131,7 @@ public class CashoutServlet extends CashHandlerServlet {
     						create_date = create_date + " 20:00";
     					}
     					
-    					Date cd = null;
-						try {
-							cd = dateFormat.parse(create_date);
-						} catch (ParseException e1) {
-							log.error("Can't parse", e1);
-						}
-    					
+    					Date cd = dateFormat.parse(create_date);
     					
 						if ( cashoutManager.getByShiftDate(cd) == null ) {
     						
@@ -94,60 +143,50 @@ public class CashoutServlet extends CashHandlerServlet {
     	        			session.setAttribute("adminsave", "yes");
     	        			
     	        			session.setAttribute("cashout", co);
-    					}
-    					
-    			} else {
-    				
-        			Shift shiftObject = null;
-        			
-					try {
-						
-						shiftObject = ShiftServlet.getNewShift();
-						
-					} catch (Exception e) {
-						
-						log.error("New Shift can't find", e);
-					}
-        			co.setShift( shiftObject );
-        			
-        			session.setAttribute("cashout", co);    				
-    			}
-    			
-    		}
-			return "/secure/index.jsp";			
-    }
-	
-    public void save(HttpServletRequest request) throws Exception {
-		if ( getCashout(request.getSession()).getCashoutId() == null ) {
-			log.info("adding a RECORD!");
-			
-    		Cashout co = getCashout(request.getSession());
-    		
-    		Date d = co.getShift().getShiftDate();
+    	        			
+    					} else {
 
-    		log.info("Calling persist on:" + getCashout(request.getSession()).getShift().getShiftDate());
-    		
-    		request.getSession().removeAttribute("cashout");
-    		
-    		cashoutManager.saveOrUpdateCashout(co);
-    		
-    		log.info("done calling persist");
-    		
-    		Cashout saved = cashoutManager.getByShiftDate(d);
-    		
-    		log.debug("new RECORD ID - " + saved.getCashoutId());
-    		request.getSession().setAttribute("cashout", saved);
-		} else {
-			log.info("shouldn't have to do this!");
-		}
+    						throw new Exception("Shift Exists already");
+    						
+    					}
+
+					}	
+				}					
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			return "/secure/index.jsp";			
+						
     }
-    
-    @RequestMapping(value="/secure/cashout.do", method = RequestMethod.POST)
+	    
+    @RequestMapping(value="/secure/cashout/save.do", method = RequestMethod.POST)
     public String cashoutSave(HttpServletRequest request) {
     	log.info("called doPost-");
     	
     	try {
-			save(request);
+    		if ( getCashout(request.getSession()).getCashoutId() == null ) {
+    			log.info("adding a RECORD!");
+    			
+        		Cashout co = getCashout(request.getSession());
+        		
+        		Date d = co.getShift().getShiftDate();
+
+        		log.info("Calling persist on:" + getCashout(request.getSession()).getShift().getShiftDate());
+        		
+        		request.getSession().removeAttribute("cashout");
+        		
+        		cashoutManager.saveOrUpdateCashout(co);
+        		
+        		log.info("done calling persist");
+        		
+        		Cashout saved = cashoutManager.getByShiftDate(d);
+        		
+        		log.debug("new RECORD ID - " + saved.getCashoutId());
+        		request.getSession().setAttribute("cashout", saved);
+    		} else {
+    			log.info("shouldn't have to do this!");
+    		}
 		} catch (Exception e) {
 			log.error("Error saving cashout", e);
 		}
