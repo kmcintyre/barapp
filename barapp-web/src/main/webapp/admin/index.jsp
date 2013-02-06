@@ -43,7 +43,7 @@ request.getSession().removeAttribute("cashoutId");
 	<br>
 	<br>
 
-	<a href="/report/">Reports</a>
+	<a href="<%= request.getContextPath() %>/admin/reports.jsp">Reports</a>
 
 
 <% } else if ( request.getParameter("action").equals("users") )  { %> 
